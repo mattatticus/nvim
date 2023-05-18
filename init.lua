@@ -1,0 +1,6 @@
+require "Keymaps"
+require "Lazy"
+require "Looks"
+require "Options"
+require "Lsp"
+require "Treesitter"
