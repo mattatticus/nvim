@@ -14,9 +14,10 @@ keymap("n", "<leader>mj", "<C-w>j")
 keymap("n", "<leader>mk", "<C-w>k")
 keymap("n", "<leader>ml", "<C-w>l")
 
-keymap("n", "<leader>u", ":UndotreeToggle<CR>")
-keymap("n", "<leader>h", ":Telescope find_files<CR>")
+keymap("n", "<leader>u", "<Cmd> UndotreeToggle<CR>")
+keymap("n", "<leader>h", "<Cmd> Telescope find_files<CR>")
+keymap("n", "<leader>s", "<Cmd> NvimTreeToggle<CR>")
 
-keymap("n", "<leader>f", ":Format<CR>")
+keymap("n", "<leader>f", "<Cmd> Format<CR>")
 
 keymap("t", "<esc>", "<C-\\><C-n>")

@@ -5,6 +5,53 @@ vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
 vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
 vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
 
+local cfg = {
+	debug = false,
+	log_path = vim.fn.stdpath("cache") .. "/lsp_signature.log",
+	verbose = false,
+	bind = true,
+	doc_lines = 10,
+	max_height = 12,
+	max_width = 80,
+	noice = false,
+	wrap = true,
+	floating_window = true,
+	floating_window_above_cur_line = true,
+	floating_window_off_x = 1,
+	floating_window_off_y = 0,
+	close_timeout = 4000,
+	fix_pos = false,
+	hint_enable = true,
+	hint_prefix = " ",
+	hint_scheme = "String",
+	hint_inline = function()
+		return false
+	end,
+	hi_parameter = "LspSignatureActiveParameter",
+	handler_opts = {
+		border = "none",
+	},
+
+	always_trigger = false,
+
+	auto_close_after = nil,
+	extra_trigger_chars = {},
+	zindex = 200,
+
+	padding = "",
+
+	transparency = nil,
+	shadow_blend = 36,
+	shadow_guibg = "Black",
+	timer_interval = 200,
+	toggle_key = nil,
+	toggle_key_flip_floatwin_setting = false,
+
+	select_signature_key = nil,
+	move_cursor_key = nil,
+}
+require("lsp_signature").setup(cfg)
+
 local on_attach = function(_, bufnr)
 	vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
 	local bufopts = { noremap = true, silent = true, buffer = bufnr }
@@ -22,31 +69,15 @@ local on_attach = function(_, bufnr)
 	vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
 	vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
 	vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
-	-- vim.keymap.set("n", "<leader>f", function()
-	-- 	vim.lsp.buf.format({ async = true })
-	-- end, bufopts)
+
+	require("lsp_signature").on_attach(cfg, bufnr)
 end
 
 local lsp_flags = {
-
 	debounce_text_changes = 150,
 }
 
 local lspconfig = require("lspconfig")
-
--- lspconfig.ccls.setup({
--- 	on_attach = on_attach,
--- 	init_options = {
--- 		compilationDatabaseDirectory = "build",
--- 		index = {
--- 			threads = 0,
--- 		},
--- 		clang = {
--- 			excludeArgs = { "-frounding-math" },
--- 		},
--- 	},
--- 	flags = lsp_flags,
--- })
 
 lspconfig.lua_ls.setup({
 	on_attach = on_attach,
@@ -78,9 +109,9 @@ local servers = {
 	"emmet_ls",
 	"rust_analyzer",
 	"gopls",
-    "jsonnet_ls",
+	"jsonnet_ls",
 	"tsserver",
-    "hls"
+	"hls",
 }
 
 vim.diagnostic.config({

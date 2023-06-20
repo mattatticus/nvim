@@ -1,9 +1,7 @@
 local cmp = require("cmp")
+local compare = require("cmp.config")
 
-local snip_status_ok, luasnip = pcall(require, "luasnip")
-if not snip_status_ok then
-	return
-end
+local luasnip = require("luasnip")
 
 local check_backspace = function()
 	local col = vim.fn.col(".") - 1
@@ -41,16 +39,28 @@ local kind_icons = {
 cmp.setup({
 	snippet = {
 		expand = function(args)
-			require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
+			require("luasnip").lsp_expand(args.body) 
 		end,
+	},
+
+	sorting = {
+		comparators = {
+			compare.offset,
+			compare.exact,
+			compare.score,
+			compare.recently_used,
+			compare.locality,
+			compare.kind,
+			compare.sort_text,
+			compare.length,
+			compare.order,
+		},
 	},
 
 	formatting = {
 		fields = { "kind", "abbr", "menu" },
 		format = function(entry, vim_item)
-			-- Kind icons
 			vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
-			-- vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
 			vim_item.menu = ({
 				nvim_lsp = "Lsp",
 				luasnip = "Snippet",
