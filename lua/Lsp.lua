@@ -78,6 +78,16 @@ local lsp_flags = {
 }
 
 local lspconfig = require("lspconfig")
+local caps = vim.lsp.protocol.make_client_capabilities()
+caps = require("cmp_nvim_lsp").default_capabilities(caps)
+
+lspconfig.emmet_ls.setup({
+	capabilities = caps,
+	filetypes = { "html" },
+	root_dir = function(_)
+		return vim.loop.cwd()
+	end,
+})
 
 lspconfig.lua_ls.setup({
 	on_attach = on_attach,
@@ -120,9 +130,6 @@ vim.diagnostic.config({
 	underline = true,
 	severity_sort = false,
 })
-
-local caps = vim.lsp.protocol.make_client_capabilities()
-caps = require("cmp_nvim_lsp").default_capabilities(caps)
 
 for _, lsp in ipairs(servers) do
 	lspconfig[lsp].setup({
