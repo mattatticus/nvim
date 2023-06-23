@@ -52,6 +52,7 @@ local plugins = {
 		"catppuccin/nvim",
 		name = "catppuccin",
 		lazy = false,
+        priority = 1000,
 		config = function()
 			require("Catppuccin")
 		end,
@@ -81,7 +82,7 @@ local plugins = {
 
 	{
 		"numToStr/Comment.nvim",
-		event = "BufNew",
+		event = "BufEnter",
 		config = function()
 			require("Comment").setup()
 		end,
@@ -135,7 +136,7 @@ local plugins = {
 		config = function()
 			require("Lualine")
 		end,
-		event = "UIEnter",
+		event = "VimEnter",
 		dependencies = {
 			"nvim-tree/nvim-web-devicons",
 			"catppuccin/nvim",
@@ -144,7 +145,7 @@ local plugins = {
 
 	{
 		"neovim/nvim-lspconfig",
-		event = "BufNew",
+        lazy = false,
 		dependencies = {
 			"ray-x/lsp_signature.nvim",
 			"nvim-treesitter/nvim-treesitter",

@@ -1,15 +1,11 @@
 local function lsp()
-	if next(vim.lsp.buf_get_clients()) ~= nil then
-		return [[力]]
-	else
-		return [[]]
-	end
+	x = next(vim.lsp.buf_get_clients()) ~= nil and [[力]] or [[]]
+	return x
 end
 
 require("lualine").setup({
 	options = {
 		theme = "catppuccin",
-		component_separators = "|",
 	},
 	sections = {
 		lualine_a = { "mode" },

@@ -122,6 +122,7 @@ local servers = {
 	"jsonnet_ls",
 	"tsserver",
 	"hls",
+	"zls",
 }
 
 vim.diagnostic.config({
