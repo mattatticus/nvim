@@ -6,6 +6,7 @@ end
 require("lualine").setup({
 	options = {
 		theme = "catppuccin",
+		component_separators = "|",
 	},
 	sections = {
 		lualine_a = { "mode" },
