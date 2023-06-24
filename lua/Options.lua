@@ -30,6 +30,8 @@ local options = {
 
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
+vim.o.timeout = true
+vim.o.timeoutlen = 200
 
 for k, v in pairs(options) do
 	vim.opt[k] = v

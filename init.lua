@@ -41,10 +41,17 @@ local plugins = {
 
 	{
 		"folke/which-key.nvim",
-		event = "VeryLazy",
-		init = function()
-			vim.o.timeout = true
-			vim.o.timeoutlen = 200
+		event = "UIEnter",
+		config = function()
+			require("WhichKey")
+		end,
+	},
+
+	{
+		"chentoast/marks.nvim",
+		event = "UIEnter",
+		config = function()
+			require("Marks")
 		end,
 	},
 
@@ -52,7 +59,7 @@ local plugins = {
 		"catppuccin/nvim",
 		name = "catppuccin",
 		lazy = false,
-        priority = 1000,
+		priority = 1000,
 		config = function()
 			require("Catppuccin")
 		end,
@@ -145,7 +152,7 @@ local plugins = {
 
 	{
 		"neovim/nvim-lspconfig",
-        lazy = false,
+		lazy = false,
 		dependencies = {
 			"ray-x/lsp_signature.nvim",
 			"nvim-treesitter/nvim-treesitter",
