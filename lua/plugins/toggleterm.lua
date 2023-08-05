@@ -3,6 +3,7 @@ return {
 	keys = {
 		{ "<leader>t", "<cmd>ToggleTerm direction=horizontal<cr>" },
 		{ "<leader>T", "<cmd>ToggleTerm direction=vertical<cr>" },
+		{ "<leader>b", "<cmd>ToggleTerm direction=tab<cr>" },
 	},
 	config = function()
 		require("toggleterm").setup({
