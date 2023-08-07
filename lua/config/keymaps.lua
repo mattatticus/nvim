@@ -8,18 +8,14 @@ vim.g.maplocalleader = " "
 vim.g.command = ""
 
 keymap("n", "<leader>n", "<C-w>w")
--- keymap("n", "<leader>mh", "<C-w>h")
--- keymap("n", "<leader>mj", "<C-w>j")
--- keymap("n", "<leader>mk", "<C-w>k")
--- keymap("n", "<leader>ml", "<C-w>l")
 
-keymap("n", "<leader>u", "<Cmd> UndotreeToggle<CR>")
-keymap("n", "<leader>h", "<Cmd> Telescope find_files<CR>")
-keymap("n", "<leader>s", "<Cmd> NvimTreeToggle<CR>")
+keymap("n", "<A-h>", "<Cmd> Telescope find_files<CR>")
+keymap("n", "<A-s>", "<Cmd> NvimTreeToggle<CR>")
 
 keymap("n", "<leader>f", "<Cmd> Format<CR>")
 
-keymap("n", "<leader>a", "<Cmd> BufferlineCycleNext<CR>")
-keymap("n", "<leader>m", "<Cmd> BufferlineCyclePrev<CR>")
+keymap("n", "<A-.>", "<Cmd> bnext<CR>")
+keymap("n", "<A-,>", "<Cmd> bprev<CR>")
 
 keymap("t", "<esc>", "<C-\\><C-n>")
+keymap("t", "<C-[>", "<C-\\><C-n>")

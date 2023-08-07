@@ -16,7 +16,7 @@ return {
 				highlight = "Search",
 				highlight_grey = "Comment",
 			},
-			enable_check_bracket_line = true,
+			enable_check_bracket_line = false,
 		})
 		npairs.add_rules(require("nvim-autopairs.rules.endwise-lua"))
 	end,

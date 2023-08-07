@@ -3,7 +3,7 @@ return {
 	keys = {
 		{ "<leader>t", "<cmd>ToggleTerm direction=horizontal<cr>" },
 		{ "<leader>T", "<cmd>ToggleTerm direction=vertical<cr>" },
-		{ "<leader>b", "<cmd>ToggleTerm direction=tab<cr>" },
+		{ "<leader>b", "<cmd>ToggleTerm direction=float<cr>" },
 	},
 	config = function()
 		require("toggleterm").setup({
@@ -17,10 +17,10 @@ return {
 			end,
 
 			hide_numbers = true,
-			shade_filetypes = {},
+			shade_filetypes = {'none'},
 			autochdir = true,
 
-			shade_terminals = false,
+			shade_terminals = true,
 
 			start_in_insert = false,
 			insert_mappings = true,
@@ -32,7 +32,11 @@ return {
 			shell = vim.o.shell,
 			auto_scroll = true,
 
-			float_opts = {},
+			float_opts = {
+				border = "curved",
+				height = vim.o.lines * 0.5,
+                winblend = 3,
+			},
 			winbar = {
 				enabled = false,
 				name_formatter = function(term)
