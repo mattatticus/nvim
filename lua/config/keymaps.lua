@@ -17,8 +17,8 @@ keymap("n", "<leader>f", "<Cmd> Format<CR>")
 keymap("n", "<A-.>", "<Cmd> bnext<CR>")
 keymap("n", "<A-,>", "<Cmd> bprev<CR>")
 
-keymap("n", "<A-S-.>", "<Cmd> tabnext<CR>")
-keymap("n", "<A-S-,>", "<Cmd> tabprev<CR>")
+keymap("n", "<A-<>", "<Cmd> tabnext<CR>")
+keymap("n", "<A->>", "<Cmd> tabprevious<CR>")
 
 keymap("t", "<esc>", "<C-\\><C-n>")
 keymap("t", "<C-[>", "<C-\\><C-n>")

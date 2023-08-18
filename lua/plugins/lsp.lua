@@ -1,9 +1,9 @@
 return {
 	"neovim/nvim-lspconfig",
+	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
 		"ray-x/lsp_signature.nvim",
 	},
-	lazy = false,
 
 	config = function()
 		local opts = { noremap = true, silent = true }
@@ -89,13 +89,17 @@ return {
 		local caps = vim.lsp.protocol.make_client_capabilities()
 		caps = require("cmp_nvim_lsp").default_capabilities(caps)
 
-		-- lspconfig.emmet_ls.setup({
-		-- 	capabilities = caps,
-		-- 	filetypes = { "html" },
-		-- 	root_dir = function(_)
-		-- 		return vim.loop.cwd()
-		-- 	end,
-		-- })
+		lspconfig.emmet_ls.setup({
+			capabilities = caps,
+			filetypes = { "html" },
+			root_dir = function(_)
+				return vim.loop.cwd()
+			end,
+		})
+
+		lspconfig.glslls.setup({
+			cmd = { "glslls", "--stdin", "--target-env=opengl" },
+		})
 
 		lspconfig.lua_ls.setup({
 			on_attach = on_attach,
@@ -124,9 +128,10 @@ return {
 			"cssls",
 			"clangd",
 			"pyright",
-			"emmet_ls",
+			-- "emmet_ls",
 			"rust_analyzer",
 			"gopls",
+			-- "glslls",
 			"jsonnet_ls",
 			"tsserver",
 			"hls",

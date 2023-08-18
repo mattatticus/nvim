@@ -1,6 +1,7 @@
 return {
 	"akinsho/bufferline.nvim",
-	lazy = false,
+	-- lazy = false,
+	event = { "BufReadPre", "BufNewFile" },
 	dependencies = { "nvim-tree/nvim-web-devicons" },
 
 	config = function()
@@ -9,7 +10,7 @@ return {
 			options = {
 				mode = "buffers",
 				style_preset = bufferline.style_preset.default,
-				themable = false,
+				themable = true,
 				numbers = "ordinal",
 
 				close_command = "bdelete! %d",

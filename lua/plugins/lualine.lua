@@ -1,20 +1,23 @@
 return {
 	"nvim-lualine/lualine.nvim",
 	lazy = false,
+	-- event = { "BufReadPre", "BufNewFile", "FileType NvimTree", "FileType alpha" },
 	dependencies = {
 		"nvim-tree/nvim-web-devicons",
 	},
 
 	config = function()
 		local function lsp()
-			return next(vim.lsp.buf_get_clients()) ~= nil and [[力]] or [[]]
+			return next(vim.lsp.get_clients()) ~= nil and [[力]] or [[]]
 		end
 
 		require("lualine").setup({
 			options = {
 				theme = "catppuccin",
 				component_separators = " ",
+				-- section_separators = { left = "", right = "" },
 				section_separators = { left = "", right = "" },
+                -- section_separators = { left = '', right = '' },
 			},
 			sections = {
 				lualine_a = { "mode" },
