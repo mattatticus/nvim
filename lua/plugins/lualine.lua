@@ -1,7 +1,7 @@
 return {
 	"nvim-lualine/lualine.nvim",
-	lazy = false,
-	-- event = { "BufReadPre", "BufNewFile", "FileType NvimTree", "FileType alpha" },
+	-- lazy = false,
+	event = { "BufReadPre", "BufNewFile", "FileType NvimTree", "FileType alpha" },
 	dependencies = {
 		"nvim-tree/nvim-web-devicons",
 	},
@@ -11,17 +11,19 @@ return {
 			return next(vim.lsp.get_clients()) ~= nil and [[力]] or [[]]
 		end
 
+		local function header()
+			return [[󰈸]]
+		end
+
 		require("lualine").setup({
 			options = {
 				theme = "catppuccin",
-				component_separators = " ",
-				-- section_separators = { left = "", right = "" },
-				section_separators = { left = "", right = "" },
-                -- section_separators = { left = '', right = '' },
+				component_separators = "",
+				section_separators = { left = "", right = "" },
 			},
 			sections = {
-				lualine_a = { "mode" },
-				lualine_b = {
+				lualine_z = { "mode" },
+				lualine_y = {
 					{
 						"filename",
 						file_status = true,
@@ -36,8 +38,7 @@ return {
 						},
 					},
 				},
-				lualine_c = {
-					{ lsp, color = { fg = "#d19a66" } },
+				lualine_x = {
 					{
 						"diagnostics",
 						sources = { "nvim_diagnostic" },
@@ -47,20 +48,23 @@ return {
 							end
 						end,
 					},
+					{ lsp, color = { fg = "#d19a66" } },
 				},
-				lualine_x = { "filetype" },
-				lualine_y = { "progress" },
-				lualine_z = { "location" },
+				lualine_c = { "filetype" },
+				lualine_b = { "location" },
+				lualine_a = { header },
 			},
 			inactive_sections = {
-				lualine_a = { "filename" },
+				lualine_a = {},
 				lualine_b = {},
 				lualine_c = {},
 				lualine_x = {},
 				lualine_y = {},
-				lualine_z = { "location" },
+				lualine_z = {},
 			},
-			tabline = {},
+			tabline = {
+				-- lualine_a = {header}
+			},
 			extensions = { "lazy", "trouble", "toggleterm", "quickfix", "nvim-tree" },
 		})
 	end,

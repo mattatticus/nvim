@@ -1,6 +1,5 @@
 return {
 	"akinsho/bufferline.nvim",
-	-- lazy = false,
 	event = { "BufReadPre", "BufNewFile" },
 	dependencies = { "nvim-tree/nvim-web-devicons" },
 
@@ -9,18 +8,15 @@ return {
 		bufferline.setup({
 			options = {
 				mode = "buffers",
-				style_preset = bufferline.style_preset.default,
+				style_preset = bufferline.style_preset.no_bold,
 				themable = true,
-				numbers = "ordinal",
+				numbers = "none",
 
 				close_command = "bdelete! %d",
 
-				indicator = {
-					style = "underline",
-				},
-
 				buffer_close_icon = "󰅖",
-				modified_icon = "●",
+				modified_icon = "",
+
 				close_icon = "󰅖",
 				left_trunc_marker = "",
 				right_trunc_marker = "",
@@ -57,15 +53,9 @@ return {
 				show_duplicate_prefix = true,
 				persist_buffer_sort = true,
 				move_wraps_at_ends = false,
-				separator_style = "none",
+				separator_style = "slope",
 				enforce_regular_tabs = true,
 				always_show_bufferline = false,
-
-				hover = {
-					enabled = true,
-					delay = 200,
-					reveal = { "close" },
-				},
 
 				highlights = require("catppuccin.groups.integrations.bufferline").get(),
 			},
