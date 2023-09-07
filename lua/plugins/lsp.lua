@@ -93,7 +93,7 @@ return {
 			capabilities = caps,
 			filetypes = { "html" },
 			root_dir = function(_)
-				return vim.loop.cwd()
+				return vim.uv.cwd()
 			end,
 		})
 
