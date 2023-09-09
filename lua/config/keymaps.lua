@@ -14,6 +14,8 @@ keymap("n", "<A-s>", "<Cmd> NvimTreeToggle<CR>")
 
 keymap("n", "<leader>f", "<Cmd> Format<CR>")
 
+keymap("n", "<leader>b", "<Cmd> BufferLinePick<CR>")
+
 keymap("n", "<A-.>", "<Cmd> bnext<CR>")
 keymap("n", "<A-,>", "<Cmd> bprev<CR>")
 

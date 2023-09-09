@@ -22,11 +22,6 @@ return {
 				},
 				haskell = {
 					function()
-						-- return {
-						-- 	exe = "stylish-haskell",
-						-- 	args = {},
-						-- 	stdin = true,
-						-- }
 						return {
 							exe = "fourmolu",
 							args = { "--no-cabal" },

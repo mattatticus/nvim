@@ -1,7 +1,6 @@
 return {
 	"goolord/alpha-nvim",
 	event = "VimEnter",
-	-- lazy = false,
 	opts = function()
 		local dashboard = require("alpha.themes.dashboard")
 		local logo = [[
@@ -18,7 +17,7 @@ return {
 		dashboard.section.buttons.val = {
 			dashboard.button("f", " " .. " Find file", ":Telescope find_files <CR>"),
 			dashboard.button("r", " " .. " Recent files", ":Telescope oldfiles <CR>"),
-			dashboard.button("g", " " .. " Find text", ":Telescope live_grep <CR>"),
+			dashboard.button("s", " " .. " Scratch Buffer", ":Alpha | setl noswapfile buftype=nofile bufhidden=delete<CR>"),
 			dashboard.button("l", "󰒲 " .. " Lazy", ":Lazy<CR>"),
 		}
 		dashboard.section.header.opts.hl = "AlphaHeader"
