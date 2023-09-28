@@ -2,23 +2,26 @@ return {
 	"nvim-treesitter/nvim-treesitter",
 	event = { "BufReadPost", "BufNewFile" },
 
-    build = function()
-        vim.cmd("TSUpdate")
-    end,
+	build = function()
+		vim.cmd("TSUpdate")
+	end,
 
 	config = function()
 		require("nvim-treesitter.configs").setup({
 			ensure_installed = {
+				"bash",
 				"c",
 				"cpp",
-				"lua",
-				"javascript",
-				"rust",
-				"go",
-				"html",
 				"css",
-				"scss",
+				"fish",
+				"go",
 				"haskell",
+				"html",
+				"javascript",
+				"lua",
+				"python",
+				"rust",
+				"scss",
 			},
 			playground = {
 				enable = true,

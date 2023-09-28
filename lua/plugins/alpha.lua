@@ -15,7 +15,7 @@ return {
 ]]
 		dashboard.section.header.val = vim.split(logo, "\n")
 		dashboard.section.buttons.val = {
-			dashboard.button("f", " " .. " Find file", ":Telescope find_files <CR>"),
+			dashboard.button("o", " " .. " Open Explorer", ":NvimTreeToggle <CR>"),
 			dashboard.button("r", " " .. " Recent files", ":Telescope oldfiles <CR>"),
 			dashboard.button("s", " " .. " Scratch Buffer", ":Alpha | setl noswapfile buftype=nofile bufhidden=delete<CR>"),
 			dashboard.button("l", "󰒲 " .. " Lazy", ":Lazy<CR>"),

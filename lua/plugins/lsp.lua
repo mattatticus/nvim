@@ -142,7 +142,7 @@ return {
 			virtual_text = false,
 			update_in_insert = true,
 			underline = true,
-			severity_sort = false,
+			severity_sort = true,
 		})
 
 		for _, lsp in ipairs(servers) do
