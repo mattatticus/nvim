@@ -5,7 +5,7 @@ return {
 		check_ts = true,
 		fast_wrap = {
 			map = "<A-w>",
-			chars = { "{", "[", "(", '"', "'" },
+			chars = { "{", "[", "(", '"', "'", "<" },
 			pattern = [=[[%'%"%)%>%]%)%}%,]]=],
 			end_key = "-",
 			keys = "htnsdaoeuigcrlf',.pybmwvz;",
@@ -13,6 +13,6 @@ return {
 			highlight = "Search",
 			highlight_grey = "Comment",
 		},
-		enable_check_bracket_line = false,
+		enable_check_bracket_line = true,
 	},
 }

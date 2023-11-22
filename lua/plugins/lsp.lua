@@ -7,6 +7,7 @@ return {
 
 	config = function()
 		local opts = { noremap = true, silent = true }
+        local signature = require"lsp_signature"
 
 		vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
 		vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
@@ -15,7 +16,7 @@ return {
 
 		local cfg = {
 			debug = false,
-			log_path = vim.fn.stdpath("cache") .. "/lsp_signature.log",
+			log_path = "/tmp/lsp_signature.log",
 			verbose = false,
 			bind = true,
 			doc_lines = 10,
@@ -58,10 +59,10 @@ return {
 			select_signature_key = nil,
 			move_cursor_key = nil,
 		}
-		require("lsp_signature").setup(cfg)
+		signature.setup(cfg)
 
 		local on_attach = function(_, bufnr)
-			vim.api.nvim_buf_set_option(bufnr, "omnifunc", "v:lua.vim.lsp.omnifunc")
+			vim.api.nvim_set_option_value("omnifunc", "v:lua.vim.lsp.omnifunc", { buf = bufnr })
 			local bufopts = { noremap = true, silent = true, buffer = bufnr }
 			vim.keymap.set("n", "gD", vim.lsp.buf.declaration, bufopts)
 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
@@ -78,7 +79,7 @@ return {
 			vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
 			vim.keymap.set("n", "gr", vim.lsp.buf.references, bufopts)
 
-			require("lsp_signature").on_attach(cfg, bufnr)
+			signature.on_attach(cfg, bufnr)
 		end
 
 		local lsp_flags = {
@@ -128,10 +129,10 @@ return {
 			"cssls",
 			"clangd",
 			"pyright",
-			-- "emmet_ls",
+			"csharp_ls",
+			"fsautocomplete",
 			"rust_analyzer",
 			"gopls",
-			-- "glslls",
 			"jsonnet_ls",
 			"tsserver",
 			"hls",

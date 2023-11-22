@@ -23,6 +23,9 @@ require("lazy").setup("plugins", {
 	ui = {
 		border = "none",
 	},
+	git = {
+		timeout = 300,
+	},
 	checker = { enabled = true },
 	debug = false,
 })

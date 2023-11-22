@@ -6,14 +6,24 @@ return {
 		indent = {
 			char = "│",
 		},
-		show_end_of_line = true,
-		show_current_context = true,
-		show_current_context_start = true,
-		filetype_exclude = { "lazy", "alpha" },
-		buftype_exclude = {
-			"terminal",
-			"lspinfo",
-			"help",
+		exclude = {
+			filetypes = {
+				"lazy",
+				"alpha",
+				"lspinfo",
+				"checkhealth",
+				"help",
+				"man",
+				"gitcommit",
+				"TelescopePrompt",
+				"TelescopeResults",
+			},
+			buftypes = {
+				"terminal",
+				"lspinfo",
+				"help",
+                "nofile"
+			},
 		},
 		scope = { enabled = true },
 	},

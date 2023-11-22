@@ -44,6 +44,14 @@ return {
 					}
 				end,
 			},
+			scss = {
+				function()
+					return {
+						exe = "css-beautify",
+						stdin = 1,
+					}
+				end,
+			},
 			css = {
 				function()
 					return {
