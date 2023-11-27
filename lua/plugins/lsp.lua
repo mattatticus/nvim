@@ -98,10 +98,6 @@ return {
 			end,
 		})
 
-		lspconfig.glslls.setup({
-			cmd = { "glslls", "--stdin", "--target-env=opengl" },
-		})
-
 		lspconfig.lua_ls.setup({
 			on_attach = on_attach,
 			flags = lsp_flags,
@@ -129,11 +125,9 @@ return {
 			"cssls",
 			"clangd",
 			"pyright",
-			"csharp_ls",
-			"fsautocomplete",
 			"rust_analyzer",
+            "glsl_analyzer",
 			"gopls",
-			"jsonnet_ls",
 			"tsserver",
 			"hls",
 			"zls",
