@@ -1,4 +1,4 @@
-vim.loader.enable()
+-- vim.loader.enable()
 
 require("config.options")
 require("config.keymaps")
@@ -20,11 +20,12 @@ vim.opt.runtimepath:prepend(lazypath)
 require("lazy").setup("plugins", {
 	install = { colorscheme = { "catppuccin" } },
 	defaults = { lazy = true },
+--	concurrency = 2,
 	ui = {
 		border = "none",
 	},
 	git = {
-		timeout = 300,
+		timeout = 500,
 	},
 	checker = { enabled = true },
 	debug = false,

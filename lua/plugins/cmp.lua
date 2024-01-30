@@ -6,7 +6,7 @@ return {
 		"hrsh7th/cmp-path",
 		"hrsh7th/cmp-cmdline",
 	},
-	event = { "InsertEnter", "CmdlineEnter" },
+    lazy =false,
 
 	config = function()
 		local function has_words_before()

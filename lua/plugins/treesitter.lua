@@ -1,6 +1,6 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
-	event = { "BufReadPost", "BufNewFile" },
+    lazy = false,
 
 	build = function()
 		vim.cmd("TSUpdate")
