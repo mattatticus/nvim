@@ -4,7 +4,7 @@ return {
 	opts = {
 		check_ts = true,
 		fast_wrap = {
-			map = "W",
+			map = "<A-t>",
 			chars = { "{", "[", "(", '"', "'", "<" },
 			pattern = [=[[%'%"%)%>%]%)%}%,]]=],
 			end_key = "-",
