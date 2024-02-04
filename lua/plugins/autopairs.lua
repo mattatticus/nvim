@@ -1,10 +1,10 @@
 return {
 	"windwp/nvim-autopairs",
-	event = "InsertEnter",
+	event = {"BufNewFile", "BufReadPost"},
 	opts = {
 		check_ts = true,
 		fast_wrap = {
-			map = "<A-w>",
+			map = "W",
 			chars = { "{", "[", "(", '"', "'", "<" },
 			pattern = [=[[%'%"%)%>%]%)%}%,]]=],
 			end_key = "-",

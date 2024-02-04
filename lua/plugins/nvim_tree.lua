@@ -3,7 +3,9 @@ return {
 	dependencies = {
 		"nvim-tree/nvim-web-devicons",
 	},
-	cmd = { "NvimTreeToggle" },
+	keys = {
+		{ "<A-s>", "<Cmd> NvimTreeToggle<CR>" },
+	},
 	opts = {
 		sort_by = "case_sensitive",
 		view = {

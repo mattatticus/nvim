@@ -3,7 +3,6 @@ return {
 	keys = {
 		{ "<leader>t", "<cmd>ToggleTerm direction=horizontal<cr>" },
 		{ "<leader>T", "<cmd>ToggleTerm direction=vertical<cr>" },
-		{ "<leader>b", "<cmd>ToggleTerm direction=float<cr>" },
 	},
 	opts = {
 
@@ -30,12 +29,6 @@ return {
 		close_on_exit = true,
 		shell = vim.o.shell,
 		auto_scroll = true,
-
-		float_opts = {
-			border = "curved",
-			height = vim.o.lines * 0.5,
-			winblend = 3,
-		},
 		winbar = {
 			enabled = false,
 			name_formatter = function(term)

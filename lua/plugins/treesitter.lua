@@ -1,6 +1,7 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
-    lazy = false,
+    event = {"BufNewFile", "BufReadPost"},
+    -- lazy = false,
 
 	build = function()
 		vim.cmd("TSUpdate")
@@ -22,6 +23,7 @@ return {
 				"python",
 				"rust",
 				"scss",
+                "yuck",
 			},
 			playground = {
 				enable = true,

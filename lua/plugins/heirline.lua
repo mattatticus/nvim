@@ -2,6 +2,9 @@ return {
 	"rebelot/heirline.nvim",
 	priority = 1000,
 	lazy = false,
+	dependencies = {
+		"nvim-tree/nvim-web-devicons",
+	},
 	config = function()
 		local get_icon = require("nvim-web-devicons").get_icon_color_by_filetype
 		local conditions = require "heirline.conditions"

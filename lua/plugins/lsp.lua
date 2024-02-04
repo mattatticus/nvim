@@ -1,13 +1,28 @@
 return {
 	"neovim/nvim-lspconfig",
-    lazy = false,
+	ft = {
+		"c",
+		"cpp",
+		"css",
+		"glsl",
+		"go",
+		"haskell",
+		"js",
+		"jsx",
+		"python",
+		"rust",
+		"ts",
+		"zig",
+        "html",
+        "lua",
+	},
 	dependencies = {
 		"ray-x/lsp_signature.nvim",
 	},
 
 	config = function()
 		local opts = { noremap = true, silent = true }
-        local signature = require"lsp_signature"
+		local signature = require "lsp_signature"
 
 		vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
 		vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
@@ -33,9 +48,7 @@ return {
 			hint_enable = true,
 			hint_prefix = " ",
 			hint_scheme = "String",
-			hint_inline = function()
-				return false
-			end,
+			hint_inline = function() return false end,
 			hi_parameter = "LspSignatureActiveParameter",
 			handler_opts = {
 				border = "shadow",
@@ -71,9 +84,12 @@ return {
 			vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
 			vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, bufopts)
 			vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
-			vim.keymap.set("n", "<leader>wl", function()
-				print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-			end, bufopts)
+			vim.keymap.set(
+				"n",
+				"<leader>wl",
+				function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
+				bufopts
+			)
 			vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, bufopts)
 			vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
 			vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
@@ -86,19 +102,17 @@ return {
 			debounce_text_changes = 150,
 		}
 
-		local lspconfig = require("lspconfig")
+		local lspconfig = require "lspconfig"
 		local caps = vim.lsp.protocol.make_client_capabilities()
 		caps = require("cmp_nvim_lsp").default_capabilities(caps)
 
-		lspconfig.emmet_ls.setup({
+		lspconfig.emmet_ls.setup {
 			capabilities = caps,
 			filetypes = { "html" },
-			root_dir = function(_)
-				return vim.uv.cwd()
-			end,
-		})
+			root_dir = function(_) return vim.uv.cwd() end,
+		}
 
-		lspconfig.lua_ls.setup({
+		lspconfig.lua_ls.setup {
 			on_attach = on_attach,
 			flags = lsp_flags,
 			settings = {
@@ -112,45 +126,43 @@ return {
 					},
 					workspace = {
 						library = {
-							[vim.fn.expand("$VIMRUNTIME/lua")] = true,
-							[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
+							[vim.fn.expand "$VIMRUNTIME/lua"] = true,
+							[vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
 							["/usr/share/awesome/lib/"] = true,
 						},
 					},
 				},
 			},
-		})
+		}
 
 		local servers = {
 			"cssls",
 			"clangd",
 			"pyright",
 			"rust_analyzer",
-            "glsl_analyzer",
+			"glsl_analyzer",
 			"gopls",
 			"tsserver",
 			"hls",
 			"zls",
 		}
 
-		vim.diagnostic.config({
+		vim.diagnostic.config {
 			virtual_text = false,
 			update_in_insert = true,
 			underline = true,
 			severity_sort = true,
-		})
+		}
 
 		for _, lsp in ipairs(servers) do
-			lspconfig[lsp].setup({
+			lspconfig[lsp].setup {
 				on_attach = on_attach,
 				flags = lsp_flags,
-			})
+			}
 		end
 
 		vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-			callback = function()
-				vim.diagnostic.open_float(nil, { focus = false })
-			end,
+			callback = function() vim.diagnostic.open_float(nil, { focus = false }) end,
 		})
 	end,
 }

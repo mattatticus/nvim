@@ -9,12 +9,7 @@ vim.g.command = ""
 
 keymap("n", "<leader>n", "<C-w>w")
 
-keymap("n", "<A-h>", "<Cmd> Telescope find_files<CR>")
-keymap("n", "<A-s>", "<Cmd> NvimTreeToggle<CR>")
-
 keymap("n", "<leader>f", "<Cmd> Format<CR>")
-
-keymap("n", "<leader>b", "<Cmd> BufferLinePick<CR>")
 
 keymap("n", "<A-.>", "<Cmd> bnext<CR>")
 keymap("n", "<A-,>", "<Cmd> bprev<CR>")

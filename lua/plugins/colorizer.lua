@@ -1,5 +1,6 @@
 return {
 	"NvChad/nvim-colorizer.lua",
+	ft = { "css", "scss", "sass", "html" },
 	cmd = "ColorizerToggle",
 	opts = {
 		filetypes = { "*" },
