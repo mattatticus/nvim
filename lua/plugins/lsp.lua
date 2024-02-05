@@ -13,8 +13,8 @@ return {
 		"rust",
 		"ts",
 		"zig",
-        "html",
-        "lua",
+		"html",
+		"lua",
 	},
 	dependencies = {
 		"ray-x/lsp_signature.nvim",
@@ -122,13 +122,12 @@ return {
 						path = vim.split(package.path, ";"),
 					},
 					diagnostics = {
-						globals = { "vim", "awesome", "root", "client" },
+						globals = { "vim" },
 					},
 					workspace = {
 						library = {
 							[vim.fn.expand "$VIMRUNTIME/lua"] = true,
 							[vim.fn.expand "$VIMRUNTIME/lua/vim/lsp"] = true,
-							["/usr/share/awesome/lib/"] = true,
 						},
 					},
 				},

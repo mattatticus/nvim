@@ -4,7 +4,7 @@ return {
 		"nvim-tree/nvim-web-devicons",
 	},
 	keys = {
-		{ "<A-s>", "<Cmd> NvimTreeToggle<CR>" },
+		{ "<A-s>", function() require("nvim-tree.api").tree.toggle() end },
 	},
 	opts = {
 		sort_by = "case_sensitive",

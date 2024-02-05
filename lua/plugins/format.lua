@@ -1,6 +1,8 @@
 return {
 	"mhartington/formatter.nvim",
-	cmd = { "FormatWrite", "Format" },
+	keys = {
+		{ "<leader>f", function() vim.cmd "Format" end },
+	},
 	opts = {
 		filetype = {
 			lua = {

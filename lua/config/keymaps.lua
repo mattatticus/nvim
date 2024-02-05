@@ -9,8 +9,6 @@ vim.g.command = ""
 
 keymap("n", "<leader>n", "<C-w>w")
 
-keymap("n", "<leader>f", "<Cmd> Format<CR>")
-
 keymap("n", "<A-.>", "<Cmd> bnext<CR>")
 keymap("n", "<A-,>", "<Cmd> bprev<CR>")
 
