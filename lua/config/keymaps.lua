@@ -8,6 +8,7 @@ vim.g.maplocalleader = " "
 vim.g.command = ""
 
 keymap("n", "<leader>n", "<C-w>w")
+keymap("n", "<leader>c", "<Cmd>bd|bp<CR>")
 
 keymap("n", "<A-.>", "<Cmd> bnext<CR>")
 keymap("n", "<A-,>", "<Cmd> bprev<CR>")

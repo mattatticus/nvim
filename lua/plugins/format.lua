@@ -75,7 +75,9 @@ return {
 				function()
 					return {
 						exe = "clang-format",
-						args = { "--style='{BasedOnStyle: GNU, IndentWidth: 4}'" },
+						args = {
+							[[--style="{BasedOnStyle: GNU, IndentWidth: 4, AllowShortIfStatementsOnASingleLine: 'AllIfsAndElse'}"]],
+						},
 						stdin = true,
 					}
 				end,

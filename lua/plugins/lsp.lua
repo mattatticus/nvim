@@ -1,21 +1,6 @@
 return {
 	"neovim/nvim-lspconfig",
-	ft = {
-		"c",
-		"cpp",
-		"css",
-		"glsl",
-		"go",
-		"haskell",
-		"js",
-		"jsx",
-		"python",
-		"rust",
-		"ts",
-		"zig",
-		"html",
-		"lua",
-	},
+	event = { "BufReadPre", "BufNewFile" },
 	dependencies = {
 		"ray-x/lsp_signature.nvim",
 	},
@@ -81,7 +66,7 @@ return {
 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, bufopts)
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, bufopts)
 			vim.keymap.set("n", "gi", vim.lsp.buf.implementation, bufopts)
-			vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, bufopts)
+			vim.keymap.set("n", "<C-s>", vim.lsp.buf.signature_help, bufopts)
 			vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, bufopts)
 			vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
 			vim.keymap.set(
@@ -114,12 +99,20 @@ return {
 
 		lspconfig.lua_ls.setup {
 			on_attach = on_attach,
+			capabilities = caps,
 			flags = lsp_flags,
 			settings = {
 				Lua = {
 					runtime = {
-						version = "LuaJIT",
-						path = vim.split(package.path, ";"),
+						version = "Lua 5.4",
+						path = {
+							"?.lua",
+							"?/init.lua",
+							vim.fn.expand "~/.luarocks/share/lua/5.4/?.lua",
+							vim.fn.expand "~/.luarocks/share/lua/5.4/?/init.lua",
+							"/usr/share/lua/5.4/?.lua",
+							"/usr/share/lua/5.4/?/init.lua",
+						},
 					},
 					diagnostics = {
 						globals = { "vim" },
@@ -134,9 +127,15 @@ return {
 			},
 		}
 
+		lspconfig.clangd.setup {
+			cmd = { "clangd", "--background-index=0" },
+			capabilities = caps,
+			-- filetypes = { "c", "h", "hpp", "cpp", "objc", "objcpp", "cuda", "proto" },
+		}
+
 		local servers = {
 			"cssls",
-			"clangd",
+			-- "clangd",
 			"pyright",
 			"rust_analyzer",
 			"glsl_analyzer",

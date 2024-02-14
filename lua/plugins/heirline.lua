@@ -354,7 +354,7 @@ return {
 					end,
 					on_click = {
 						callback = vim.schedule_wrap(function(_, minwid)
-							vim.api.nvim_buf_delete(minwid, { force = false })
+							vim.cmd "bd|bp"
 							vim.cmd.redrawtabline()
 						end),
 						minwid = function(self) return self.bufnr end,
