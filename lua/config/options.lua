@@ -27,6 +27,7 @@ local options = {
 	updatecount = 0,
 	updatetime = 400,
 	wrap = false,
+    fsync = false
 }
 
 vim.g.loaded_netrw = 1

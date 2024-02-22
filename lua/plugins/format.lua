@@ -1,7 +1,7 @@
 return {
 	"mhartington/formatter.nvim",
 	keys = {
-		{ "<leader>f", function() vim.cmd "Format" end },
+		{ "<leader>fo", function() vim.cmd "Format" end },
 	},
 	opts = {
 		filetype = {
@@ -66,7 +66,6 @@ return {
 				function()
 					return {
 						exe = "clang-format",
-						args = { "--style='{BasedOnStyle: GNU, IndentWidth: 4}'" },
 						stdin = true,
 					}
 				end,
@@ -75,9 +74,6 @@ return {
 				function()
 					return {
 						exe = "clang-format",
-						args = {
-							[[--style="{BasedOnStyle: GNU, IndentWidth: 4, AllowShortIfStatementsOnASingleLine: 'AllIfsAndElse'}"]],
-						},
 						stdin = true,
 					}
 				end,

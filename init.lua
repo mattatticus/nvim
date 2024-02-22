@@ -1,5 +1,4 @@
 -- vim.loader.enable()
-
 require "config.options"
 require "config.keymaps"
 
@@ -16,7 +15,6 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 
--- load lazy
 require("lazy").setup("plugins", {
 	install = { colorscheme = { "catppuccin" } },
 	defaults = { lazy = true },

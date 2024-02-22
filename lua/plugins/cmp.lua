@@ -8,7 +8,6 @@ return {
 		"hrsh7th/cmp-cmdline",
 		"nvim-tree/nvim-web-devicons",
 	},
-	-- lazy =false,
 
 	config = function()
 		local function has_words_before()

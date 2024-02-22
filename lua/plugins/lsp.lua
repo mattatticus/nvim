@@ -6,13 +6,7 @@ return {
 	},
 
 	config = function()
-		local opts = { noremap = true, silent = true }
 		local signature = require "lsp_signature"
-
-		vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, opts)
-		vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, opts)
-		vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
-		vim.keymap.set("n", "<leader>q", vim.diagnostic.setloclist, opts)
 
 		local cfg = {
 			debug = false,
@@ -69,12 +63,12 @@ return {
 			vim.keymap.set("n", "<C-s>", vim.lsp.buf.signature_help, bufopts)
 			vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, bufopts)
 			vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
-			vim.keymap.set(
-				"n",
-				"<leader>wl",
-				function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
-				bufopts
-			)
+			-- vim.keymap.set(
+			-- 	"n",
+			-- 	"<leader>wl",
+			-- 	function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
+			-- 	bufopts
+			-- )
 			vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, bufopts)
 			vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
 			vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
@@ -129,13 +123,12 @@ return {
 
 		lspconfig.clangd.setup {
 			cmd = { "clangd", "--background-index=0" },
+			on_attach = on_attach,
 			capabilities = caps,
-			-- filetypes = { "c", "h", "hpp", "cpp", "objc", "objcpp", "cuda", "proto" },
 		}
 
 		local servers = {
 			"cssls",
-			-- "clangd",
 			"pyright",
 			"rust_analyzer",
 			"glsl_analyzer",
@@ -156,6 +149,7 @@ return {
 			lspconfig[lsp].setup {
 				on_attach = on_attach,
 				flags = lsp_flags,
+				capabilities = caps,
 			}
 		end
 
