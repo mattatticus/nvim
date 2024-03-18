@@ -3,9 +3,7 @@ return {
 	name = "catppuccin",
 	priority = 1000,
 	lazy = false,
-	init = function()
-        require"catppuccin".load()
-	end,
+	init = function() require("catppuccin").load() end,
 	opts = {
 		flavour = "mocha",
 		background = {
@@ -17,8 +15,6 @@ return {
 		term_colors = true,
 		dim_inactive = {
 			enabled = false,
-			shade = "dark",
-			percentage = 0.15,
 		},
 		no_italic = false,
 		no_bold = true,
@@ -27,7 +23,7 @@ return {
 			conditionals = { "italic" },
 			loops = { "italic" },
 			functions = { "italic" },
-			keywords = {},
+			keywords = { "italic" },
 			strings = {},
 			variables = {},
 			numbers = {},

@@ -63,12 +63,6 @@ return {
 			vim.keymap.set("n", "<C-s>", vim.lsp.buf.signature_help, bufopts)
 			vim.keymap.set("n", "<leader>wa", vim.lsp.buf.add_workspace_folder, bufopts)
 			vim.keymap.set("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, bufopts)
-			-- vim.keymap.set(
-			-- 	"n",
-			-- 	"<leader>wl",
-			-- 	function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
-			-- 	bufopts
-			-- )
 			vim.keymap.set("n", "<leader>D", vim.lsp.buf.type_definition, bufopts)
 			vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
 			vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, bufopts)
@@ -131,7 +125,6 @@ return {
 			"cssls",
 			"pyright",
 			"rust_analyzer",
-			"glsl_analyzer",
 			"gopls",
 			"tsserver",
 			"hls",
@@ -154,7 +147,9 @@ return {
 		end
 
 		vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-			callback = function() vim.diagnostic.open_float(nil, { focus = false }) end,
+			callback = function()
+				vim.diagnostic.open_float(nil, { focus = false })
+			end,
 		})
 	end,
 }

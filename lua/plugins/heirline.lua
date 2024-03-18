@@ -353,7 +353,7 @@ return {
 						}
 					end,
 					on_click = {
-						callback = vim.schedule_wrap(function(_, minwid)
+						callback = vim.schedule_wrap(function(_, _)
 							vim.cmd "bd|bp"
 							vim.cmd.redrawtabline()
 						end),
