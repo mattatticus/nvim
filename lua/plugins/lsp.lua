@@ -1,6 +1,6 @@
 return {
 	"neovim/nvim-lspconfig",
-	event = { "BufReadPre", "BufNewFile" },
+	event = { "BufReadPre", "BufNewFile", "BufReadPost" },
 	dependencies = {
 		"ray-x/lsp_signature.nvim",
 	},
@@ -13,8 +13,8 @@ return {
 			log_path = "/tmp/lsp_signature.log",
 			verbose = false,
 			bind = true,
-			doc_lines = 10,
-			max_height = 12,
+			doc_lines = 12,
+			max_height = 15,
 			max_width = 80,
 			noice = false,
 			wrap = true,
@@ -22,24 +22,23 @@ return {
 			floating_window_above_cur_line = true,
 			floating_window_off_x = 1,
 			floating_window_off_y = 0,
-			close_timeout = 4000,
-			fix_pos = false,
+			close_timeout = 1000,
+			fix_pos = true,
 			hint_enable = true,
 			hint_prefix = " ",
 			hint_scheme = "String",
-			hint_inline = function() return false end,
 			hi_parameter = "LspSignatureActiveParameter",
 			handler_opts = {
-				border = "shadow",
+				border = "none",
 			},
 
 			always_trigger = false,
 
 			auto_close_after = nil,
 			extra_trigger_chars = {},
-			zindex = 200,
+			zindex = 1000,
 
-			padding = "",
+			padding = "  ",
 
 			transparency = nil,
 			shadow_blend = 36,
@@ -73,6 +72,13 @@ return {
 
 		local lsp_flags = {
 			debounce_text_changes = 150,
+		}
+
+		vim.diagnostic.config {
+			virtual_text = false,
+			update_in_insert = true,
+			underline = true,
+			severity_sort = true,
 		}
 
 		local lspconfig = require "lspconfig"
@@ -131,13 +137,6 @@ return {
 			"zls",
 		}
 
-		vim.diagnostic.config {
-			virtual_text = false,
-			update_in_insert = true,
-			underline = true,
-			severity_sort = true,
-		}
-
 		for _, lsp in ipairs(servers) do
 			lspconfig[lsp].setup {
 				on_attach = on_attach,
@@ -147,9 +146,7 @@ return {
 		end
 
 		vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-			callback = function()
-				vim.diagnostic.open_float(nil, { focus = false })
-			end,
+			callback = function() vim.diagnostic.open_float(nil, { focus = false }) end,
 		})
 	end,
 }

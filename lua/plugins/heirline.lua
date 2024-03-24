@@ -6,7 +6,7 @@ return {
 		"nvim-tree/nvim-web-devicons",
 	},
 	config = function()
-		local get_icon = require("nvim-web-devicons").get_icon_color_by_filetype
+		local icon = require("nvim-web-devicons").get_icon_color_by_filetype
 		local conditions = require "heirline.conditions"
 		local utils = require "heirline.utils"
 
@@ -19,8 +19,6 @@ return {
 			}
 		end
 
-		local slice = function(com, cond) return surround({ "", "" }, { fg = "crust", bg = "mantle" }, com, cond) end
-
 		local header = {
 			provider = " 󰄛 ",
 			hl = {
@@ -29,77 +27,78 @@ return {
 			},
 		}
 
-		local ruler = slice {
-			provider = function() return string.format(" %3d:%-2d ", vim.fn.line ".", vim.fn.col ".") end,
-			hl = {
-				fg = "surface2",
-				bg = "crust",
-			},
-		}
-
-		local filetype = slice({
-			init = function(self)
-				self.ft = vim.bo.filetype
-				self.icon, self.color = get_icon(self.ft)
-
-				if self.icon == nil then
-					self.icon, self.color = get_icon "txt"
-				end
-			end,
-
-			provider = function(self) return " " .. self.icon end,
-
-			hl = function(self)
-				return {
-					fg = self.color,
-					bg = "crust",
-				}
-			end,
-
+		local ruler = {
 			{
-				provider = function(self) return " " .. self.ft .. " " end,
+				provider = "",
+				hl = { fg = "crust", bg = "mantle" },
+			},
+			{
+				provider = function() return string.format(" %3d:%-2d ", vim.fn.line ".", vim.fn.col ".") end,
 				hl = {
 					fg = "surface2",
 					bg = "crust",
 				},
 			},
-		}, function() return vim.bo.filetype ~= "" end)
-
-		local lsp = {
-			init = function(self) self.attached = conditions.lsp_attached() end,
-			{
-				provider = "",
-				hl = function(self)
-					return {
-						fg = self.attached and "peach" or "crust",
-						bg = "mantle",
-					}
-				end,
-			},
-			{
-				provider = " 󰒋 ",
-				hl = function(self)
-					return {
-						bg = self.attached and "peach" or "crust",
-						fg = self.attached and "mantle" or "surface1",
-					}
-				end,
-			},
 			{
 				provider = "",
-				hl = function(self)
-					return {
-						fg = self.attached and "peach" or "crust",
-						bg = "mantle",
-					}
-				end,
+				hl = { fg = "crust", bg = "mantle" },
 			},
 		}
 
-		local chip = function(var, icon, col)
+		local filetype = {
+			condition = function() return vim.bo.filetype ~= "" end,
+			{
+				provider = "",
+				hl = { fg = "crust", bg = "mantle" },
+			},
+			{
+				init = function(self)
+					self.ft = vim.bo.filetype
+					self.icon, self.color = icon(self.ft)
+
+					if self.icon == nil then
+						self.icon, self.color = icon "txt"
+					end
+				end,
+
+				provider = function(self) return " " .. self.icon end,
+
+				hl = function(self)
+					return {
+						fg = self.color,
+						bg = "crust",
+					}
+				end,
+
+				{
+					provider = function(self) return " " .. self.ft .. " " end,
+					hl = {
+						fg = "surface2",
+						bg = "crust",
+					},
+				},
+			},
+			{
+				provider = "",
+				hl = { fg = "crust", bg = "mantle" },
+			},
+		}
+
+		local lsp = {
+			init = function(self) self.attached = conditions.lsp_attached() end,
+			provider = " 󰒋 ",
+			hl = function(self)
+				return {
+					fg = "mantle",
+					bg = self.attached and "peach" or "crust",
+				}
+			end,
+		}
+
+		local chip = function(var, i, col)
 			return {
 				condition = function(self) return self[var] > 0 end,
-				provider = function(self) return " " .. icon .. " " .. tostring(self[var]) .. " " end,
+				provider = function(self) return " " .. i .. " " .. tostring(self[var]) .. " " end,
 
 				hl = {
 					bg = col,
@@ -126,24 +125,34 @@ return {
 			chip("errors", "", "red"),
 		}
 
-		local filename = slice({
-			provider = function() return " " .. vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":t") .. " " end,
-			hl = {
-				fg = "surface2",
-				bg = "crust",
-			},
-
+		local filename = {
+			condition = function() return vim.bo.filetype ~= "" end,
 			{
-				condition = function() return vim.bo.modified end,
-				provider = "󱦹 ",
-				hl = { fg = "green" },
+				provider = "",
+				hl = { fg = "crust", bg = "mantle" },
 			},
 			{
-				condition = function() return vim.bo.readonly or not vim.bo.modifiable end,
-				provider = "󰌾 ",
-				hl = { fg = "green" },
+				provider = function() return " " .. vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":t") .. " " end,
+				hl = {
+					fg = "surface2",
+					bg = "crust",
+				},
+				{
+					condition = function() return vim.bo.modified end,
+					provider = "󱦹 ",
+					hl = { fg = "green" },
+				},
+				{
+					condition = function() return vim.bo.readonly or not vim.bo.modifiable end,
+					provider = "󰌾 ",
+					hl = { fg = "green" },
+				},
 			},
-		}, function() return vim.api.nvim_buf_get_name(0) ~= "" end)
+			{
+				provider = "",
+				hl = { fg = "crust", bg = "mantle" },
+			},
+		}
 
 		local vimode = {
 			static = {
@@ -317,10 +326,10 @@ return {
 			{
 				init = function(self)
 					self.ft = vim.api.nvim_get_option_value("filetype", { buf = self.bufnr })
-					self.icon, self.color = get_icon(self.ft)
+					self.icon, self.color = icon(self.ft)
 
 					if self.icon == nil then
-						self.icon, self.color = get_icon "txt"
+						self.icon, self.color = icon "txt"
 					end
 				end,
 				{

@@ -41,10 +41,8 @@ return {
 			nvimtree = true,
 			telescope = true,
 			treesitter = true,
-			notify = false,
-			mini = false,
 			lsp_trouble = true,
-			which_key = false,
+            flash = true,
 			indent_blankline = {
 				enabled = true,
 				colored_indent_levels = false,

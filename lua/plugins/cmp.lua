@@ -1,6 +1,7 @@
 return {
 	"hrsh7th/nvim-cmp",
-	event = { "BufNewFile", "BufReadPost", "CmdlineEnter", "InsertEnter" },
+    version = false,
+	event = { "CmdlineEnter", "InsertEnter" },
 	dependencies = {
 		"hrsh7th/cmp-nvim-lsp",
 		"hrsh7th/cmp-buffer",
@@ -8,11 +9,9 @@ return {
 		"hrsh7th/cmp-cmdline",
 		"nvim-tree/nvim-web-devicons",
 	},
-
 	config = function()
 		local function has_words_before()
-			local coords = vim.api.nvim_win_get_cursor(0)
-			local line, col = coords[1], coords[2]
+			local line, col = (unpack or table.unpack)(vim.api.nvim_win_get_cursor(0))
 			return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match "%s" == nil
 		end
 
@@ -46,14 +45,14 @@ return {
 		}
 
 		local cmp = require "cmp"
-		local compare = require "cmp.config"
+		--[[ 		local compare = require "cmp.config" ]]
 
 		cmp.setup {
 			snippet = {
 				expand = function(args) vim.snippet.expand(args.body) end,
 			},
 
-			sorting = {
+			--[[ sorting = {
 				comparators = {
 					compare.offset,
 					compare.exact,
@@ -65,7 +64,7 @@ return {
 					compare.length,
 					compare.order,
 				},
-			},
+			}, ]]
 
 			formatting = {
 				fields = { "kind", "abbr", "menu" },
@@ -112,10 +111,9 @@ return {
 			},
 
 			sources = cmp.config.sources {
-				{ name = "nvim_lsp" },
-				{ name = "path" },
-				{ name = "luasnip" },
-				{ name = "buffer" },
+				{ name = "nvim_lsp", priority = 1000 },
+				{ name = "buffer", priority = 500 },
+				{ name = "path", priority = 250 },
 			},
 
 			experimental = {
@@ -123,13 +121,13 @@ return {
 			},
 		}
 
-		cmp.setup.filetype("gitcommit", {
+		--[[ cmp.setup.filetype("gitcommit", {
 			sources = cmp.config.sources({
 				{ name = "cmp_git" },
 			}, {
 				{ name = "buffer" },
 			}),
-		})
+		}) ]]
 
 		cmp.setup.cmdline({ "/", "?" }, {
 			mapping = cmp.mapping.preset.cmdline(),

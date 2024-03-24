@@ -1,11 +1,18 @@
 return {
 	"akinsho/toggleterm.nvim",
 	keys = {
-		{ "<leader>t", "<cmd>ToggleTerm direction=horizontal<cr>" },
-		{ "<leader>vt", "<cmd>ToggleTerm direction=vertical<cr>" },
+		{
+			"<leader>t",
+			function() vim.cmd "ToggleTerm direction=horizontal" end,
+			mode = { "n" },
+		},
+		{
+			"<leader>vt",
+			function() vim.cmd "ToggleTerm direction=vertical" end,
+			mode = { "n" },
+		},
 	},
 	opts = {
-
 		size = function(term)
 			if term.direction == "horizontal" then
 				return 8
@@ -31,9 +38,7 @@ return {
 		auto_scroll = true,
 		winbar = {
 			enabled = false,
-			name_formatter = function(term)
-				return term.name
-			end,
+			name_formatter = function(term) return term.name end,
 		},
 	},
 }

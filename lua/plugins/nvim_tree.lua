@@ -3,13 +3,15 @@ return {
 	dependencies = {
 		"nvim-tree/nvim-web-devicons",
 	},
+	init = function()
+		_ = #vim.fn.argv() == 0 and require("nvim-tree.api").tree.toggle()
+		vim.cmd "highlight NvimTreeExecFile gui=italic,underline"
+	end,
 	keys = {
 		{
 			"<A-s>",
-			function()
-				require("nvim-tree.api").tree.toggle()
-				vim.cmd "highlight NvimTreeExecFile gui=italic,underline"
-			end,
+			function() require("nvim-tree.api").tree.toggle() end,
+			mode = { "n" },
 		},
 	},
 	opts = {
