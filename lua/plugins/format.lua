@@ -1,108 +1,22 @@
 return {
-	"mhartington/formatter.nvim",
+	"stevearc/conform.nvim",
 	keys = {
-		{ "<leader>fo", function() vim.cmd "Format" end },
+		{
+			"<leader>fo",
+			function() require("conform").format { async = true, lsp_fallback = true } end,
+			mode = { "n" },
+		},
 	},
 	opts = {
-		filetype = {
-			lua = {
-				function()
-					return {
-						exe = "stylua",
-						args = {
-							"--search-parent-directories",
-							"--stdin-filepath",
-							vim.fn.shellescape(vim.api.nvim_buf_get_name(0), true),
-							"--",
-							"-",
-						},
-						stdin = true,
-					}
-				end,
-			},
-			haskell = {
-				function()
-					return {
-						exe = "fourmolu",
-						args = { "--no-cabal" },
-						stdin = true,
-					}
-				end,
-			},
-			javascript = {
-				function()
-					return {
-						exe = "js-beautify",
-						stdin = true,
-						try_node_modules = true,
-					}
-				end,
-			},
-			html = {
-				function()
-					return {
-						exe = "html-beautify",
-						stdin = 1,
-					}
-				end,
-			},
-			scss = {
-				function()
-					return {
-						exe = "css-beautify",
-						stdin = 1,
-					}
-				end,
-			},
-			css = {
-				function()
-					return {
-						exe = "css-beautify",
-						stdin = 1,
-					}
-				end,
-			},
-			cpp = {
-				function()
-					return {
-						exe = "clang-format",
-						stdin = true,
-					}
-				end,
-			},
-			c = {
-				function()
-					return {
-						exe = "clang-format",
-						stdin = true,
-					}
-				end,
-			},
-			rust = {
-				function()
-					return {
-						exe = "rustfmt",
-						stdin = true,
-					}
-				end,
-			},
-			go = {
-				function()
-					return {
-						exe = "gofmt",
-						stdin = true,
-					}
-				end,
-			},
-			zig = {
-				function()
-					return {
-						exe = "zig",
-						args = { "fmt", "--stdin" },
-						stdin = true,
-					}
-				end,
-			},
+		formatters_by_ft = {
+			lua = { "stylua" },
+			c = { "clang-format" },
+			cpp = { "clang-format" },
+			javascript = { "js-beautify" },
+			html = { "html-beautify" },
+			css = { "css-beautify" },
+			rust = { "rustfmt" },
+			go = { "gofmt" },
 		},
 	},
 }
