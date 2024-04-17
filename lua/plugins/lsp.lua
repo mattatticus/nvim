@@ -88,7 +88,7 @@ return {
 		lspconfig.emmet_ls.setup {
 			capabilities = caps,
 			filetypes = { "html" },
-			root_dir = function(_) return vim.uv.cwd() end,
+			root_dir = function(_) return vim.fn.getcwd() end,
 		}
 
 		lspconfig.lua_ls.setup {
@@ -131,6 +131,7 @@ return {
 			"cssls",
 			"pyright",
 			"rust_analyzer",
+			"kotlin_language_server",
 			"gopls",
 			"tsserver",
 			"hls",

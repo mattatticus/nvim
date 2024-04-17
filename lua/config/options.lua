@@ -38,3 +38,5 @@ vim.o.timeoutlen = 500
 for k, v in pairs(options) do
 	vim.opt[k] = v
 end
+
+vim.lsp.log.set_level(vim.log.levels.OFF)
