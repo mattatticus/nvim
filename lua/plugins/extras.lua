@@ -76,6 +76,7 @@ return {
 
 	{
 		"numToStr/Comment.nvim",
-		event = { "BufReadPre", "BufNewFile", "BufReadPost" },
+		event = { "LazyFile" },
+		opts = {},
 	},
 }

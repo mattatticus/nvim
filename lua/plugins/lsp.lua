@@ -1,6 +1,6 @@
 return {
 	"neovim/nvim-lspconfig",
-	event = { "BufReadPre", "BufNewFile", "BufReadPost" },
+	event = { "LazyFile" },
 	dependencies = {
 		"ray-x/lsp_signature.nvim",
 	},

@@ -1,7 +1,7 @@
 return {
 	{
 		"windwp/nvim-autopairs",
-		event = { "BufNewFile", "BufReadPre", "BufReadPost" },
+		event = { "LazyFile" },
 		opts = {
 			check_ts = true,
 			fast_wrap = {
@@ -119,7 +119,7 @@ return {
 
 	{
 		"nvim-treesitter/nvim-treesitter",
-		event = { "BufNewFile", "BufReadPre", "BufReadPost" },
+		event = { "LazyFile" },
 
 		build = function() vim.cmd "TSUpdate" end,
 
