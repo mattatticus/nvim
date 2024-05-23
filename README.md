@@ -1,1 +1,1 @@
-[screenshot](lua/plugins/ui.lua)
+[screenshot](preview.png)
