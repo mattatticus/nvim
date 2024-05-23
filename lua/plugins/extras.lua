@@ -31,19 +31,33 @@ return {
 		"nvim-telescope/telescope.nvim",
 		dependencies = {
 			"nvim-lua/plenary.nvim",
+			"debugloop/telescope-undo.nvim",
 		},
 		keys = {
 			{
+				"<leader>fu",
+				Cmd "Telescope undo",
+				mode = { "n" },
+			},
+			{
 				"<leader>ff",
-				function() require("telescope.builtin").find_files(require("telescope.themes").get_ivy {}) end,
+				function() require("telescope.builtin").find_files() end,
 				mode = { "n" },
 			},
 			{
 				"<leader>fg",
-				function() require("telescope.builtin").live_grep(require("telescope.themes").get_ivy {}) end,
+				function() require("telescope.builtin").live_grep() end,
 				mode = { "n" },
 			},
 		},
+		config = function()
+			require("telescope").setup {
+				extensions = {
+					undo = {},
+				},
+			}
+			require("telescope").load_extension "undo"
+		end,
 	},
 
 	{
@@ -68,6 +82,7 @@ return {
 					return vim.o.columns * 0.4
 				end
 			end,
+            start_in_insert = false,
 			hide_numbers = true,
 			shade_filetypes = { "none" },
 			autochdir = true,
@@ -76,7 +91,7 @@ return {
 
 	{
 		"numToStr/Comment.nvim",
-		event = { "LazyFile" },
+		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
 		opts = {},
 	},
 }
