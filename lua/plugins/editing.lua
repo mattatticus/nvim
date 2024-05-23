@@ -1,7 +1,7 @@
 return {
 	{
 		"windwp/nvim-autopairs",
-		event = { "LazyFile" },
+		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
 		opts = {
 			check_ts = true,
 			fast_wrap = {
@@ -28,10 +28,11 @@ return {
 			"hrsh7th/cmp-path",
 			"hrsh7th/cmp-cmdline",
 			"nvim-tree/nvim-web-devicons",
+			"hrsh7th/cmp-nvim-lsp-signature-help",
 		},
 		config = function()
 			local function has_words_before()
-				local line, col = table.unpack(vim.api.nvim_win_get_cursor(0))
+				local line, col = (unpack or table.unpack)(vim.api.nvim_win_get_cursor(0))
 				return col ~= 0
 					and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match "%s" == nil
 			end
@@ -68,7 +69,7 @@ return {
 					["<Tab>"] = cmp.mapping(function(fallback)
 						if cmp.visible() then
 							_ = #cmp.get_entries() == 1 and cmp.confirm { select = true } or cmp.select_next_item()
-						elseif vim.snippet.jumpable(1) then
+						elseif vim.snippet.active { direction = 1 } then
 							vim.snippet.jump(1)
 						elseif has_words_before() then
 							cmp.complete()
@@ -80,7 +81,7 @@ return {
 					["<S-Tab>"] = cmp.mapping(function(fallback)
 						if cmp.visible() then
 							cmp.select_prev_item()
-						elseif vim.snippet.jumpable(-1) then
+						elseif vim.snippet.active { direction = -1 } then
 							vim.snippet.jump(-1)
 						else
 							fallback()
@@ -92,6 +93,7 @@ return {
 					{ name = "nvim_lsp", priority = 1000 },
 					{ name = "buffer", priority = 500 },
 					{ name = "path", priority = 250 },
+					{ name = "nvim_lsp_signature_help" },
 				},
 
 				experimental = {
@@ -119,10 +121,9 @@ return {
 
 	{
 		"nvim-treesitter/nvim-treesitter",
-		event = { "LazyFile" },
+		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
 
 		build = function() vim.cmd "TSUpdate" end,
-
 		opts = {
 			ensure_installed = require("config").treesitter_parsers,
 			highlight = {
@@ -135,6 +136,7 @@ return {
 				enable = true,
 			},
 		},
+		config = function(_, opts) require("nvim-treesitter.configs").setup(opts) end,
 	},
 
 	{
