@@ -23,7 +23,11 @@ return {
 				telescope = true,
 				treesitter = true,
 				lsp_trouble = true,
-				indent_blankline = true,
+				indent_blankline = {
+                    enabled = true,
+                    scope_color = "blue"
+                },
+				fidget = true,
 				native_lsp = {
 					enabled = true,
 					underlines = {
@@ -87,11 +91,11 @@ return {
 
 	{
 		"lukas-reineke/indent-blankline.nvim",
-		event = { "LazyFile" },
+		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
 		main = "ibl",
 		opts = {
 			indent = {
-				char = "│",
+				char = "┃",
 			},
 			exclude = {
 				filetypes = {
@@ -116,9 +120,16 @@ return {
 	},
 
 	{
-		"vigoux/notifier.nvim",
+		"j-hui/fidget.nvim",
 		priority = 1000,
 		lazy = false,
+		opts = {
+			notification = {
+				window = {
+					winblend = 0,
+				},
+			},
+		},
 	},
 
 	{
@@ -410,7 +421,7 @@ return {
 				header,
 				align,
 				{
-					provider = function() return " Toggleterm #" .. vim.b.toggle_number .. " " end,
+					provider = function() return " Toggleterm #" .. (vim.b.toggle_number or 0) .. " " end,
 					hl = {
 						fg = "mantle",
 						bg = "teal",
