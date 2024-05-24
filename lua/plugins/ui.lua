@@ -24,9 +24,9 @@ return {
 				treesitter = true,
 				lsp_trouble = true,
 				indent_blankline = {
-                    enabled = true,
-                    scope_color = "blue"
-                },
+					enabled = true,
+					scope_color = "blue",
+				},
 				fidget = true,
 				native_lsp = {
 					enabled = true,
@@ -46,10 +46,7 @@ return {
 		dependencies = {
 			"nvim-tree/nvim-web-devicons",
 		},
-		init = function()
-			_ = #vim.fn.argv() == 0 and require("nvim-tree.api").tree.toggle()
-			vim.cmd "highlight NvimTreeExecFile gui=italic,underline"
-		end,
+		init = function() _ = #vim.fn.argv() == 0 and require("nvim-tree.api").tree.open() end,
 		keys = {
 			{
 				"<A-s>",
@@ -123,6 +120,10 @@ return {
 		"j-hui/fidget.nvim",
 		priority = 1000,
 		lazy = false,
+		dependencies = {
+			"nvim-tree/nvim-tree.lua",
+			"nvim-tree/nvim-web-devicons",
+		},
 		opts = {
 			notification = {
 				window = {
@@ -143,15 +144,6 @@ return {
 			local icon = require("nvim-web-devicons").get_icon_color_by_filetype
 			local conditions = require "heirline.conditions"
 			local utils = require "heirline.utils"
-
-			local surround = function(delims, hl, com, cond)
-				return {
-					condition = cond,
-					{ provider = delims[1], hl = hl },
-					com,
-					{ provider = delims[2], hl = hl },
-				}
-			end
 
 			local header = {
 				provider = " 󰄛 ",
@@ -266,7 +258,10 @@ return {
 					hl = { fg = "crust", bg = "mantle" },
 				},
 				{
-					provider = function() return " " .. vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":t") .. " " end,
+					provider = function()
+						local file = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(0), ":t")
+						return " " .. (file == "" and "_" or file) .. " "
+					end,
 					hl = {
 						fg = "surface2",
 						bg = "crust",
@@ -290,86 +285,13 @@ return {
 
 			local vimode = {
 				static = {
-					mode_map = {
-						["n"] = "Normal",
-						["no"] = "O-Pending",
-						["nov"] = "O-Pending",
-						["noV"] = "O-Pending",
-						["no\22"] = "O-Pending",
-						["niI"] = "Normal",
-						["niR"] = "Normal",
-						["niV"] = "Normal",
-						["nt"] = "Normal",
-						["ntT"] = "Normal",
-						["v"] = "Visual",
-						["vs"] = "Visual",
-						["V"] = "V-Line",
-						["Vs"] = "V-Line",
-						["\22"] = "V-Block",
-						["\22s"] = "V-Block",
-						["s"] = "Select",
-						["S"] = "S-Line",
-						["\19"] = "S-Block",
-						["i"] = "Insert",
-						["ic"] = "Insert",
-						["ix"] = "Insert",
-						["R"] = "Replace",
-						["Rc"] = "Replace",
-						["Rx"] = "Replace",
-						["Rv"] = "V-Replace",
-						["Rvc"] = "V-Replace",
-						["Rvx"] = "V-Replace",
-						["c"] = "Command",
-						["cv"] = "Ex-Mode",
-						["ce"] = "Ex-Mode",
-						["r"] = "Replace",
-						["rm"] = "More",
-						["r?"] = "Confirm",
-						["!"] = "Shell",
-						["t"] = "Terminal",
-					},
-					color_map = {
-						n = "teal",
-						no = "teal",
-						nov = "teal",
-						noV = "teal",
-						["no\22"] = "teal",
-						niI = "teal",
-						niR = "teal",
-						niV = "teal",
-						nt = "teal",
-						v = "maroon",
-						vs = "maroon",
-						V = "maroon",
-						Vs = "maroon",
-						["\22"] = "maroon",
-						["\22s"] = "maroon",
-						s = "mauve",
-						S = "mauve",
-						["\19"] = "mauve",
-						i = "green",
-						ic = "green",
-						ix = "green",
-						R = "lavender",
-						Rc = "lavender",
-						Rx = "lavender",
-						Rv = "lavender",
-						Rvc = "lavender",
-						Rvx = "lavender",
-						r = "lavender",
-						rm = "flamingo",
-						c = "red",
-						cv = "red",
-						["r?"] = "red",
-						["!"] = "peach",
-						t = "peach",
-					},
+					mode_map = require("config").mode_map,
 				},
 
 				init = function(self)
 					local mode = vim.fn.mode()
-					self.mode = self.mode_map[mode]
-					self.color = self.color_map[mode]
+					self.mode = self.mode_map[mode].str
+					self.color = self.mode_map[mode].col
 				end,
 
 				update = {
@@ -448,6 +370,15 @@ return {
 				terminalst,
 				mainst,
 			}
+
+			local surround = function(delims, hl, com, cond)
+				return {
+					condition = cond,
+					{ provider = delims[1], hl = hl },
+					com,
+					{ provider = delims[2], hl = hl },
+				}
+			end
 
 			local bufferelement = surround(
 				{ "", "" },
@@ -559,7 +490,7 @@ return {
 						vim.api.nvim_tabpage_list_wins(0)
 					) >= 1
 				end,
-				provider = "        File Explorer         ",
+				provider = "                              ",
 				hl = {
 					fg = "text",
 					bg = "crust",
