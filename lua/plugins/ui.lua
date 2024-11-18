@@ -92,7 +92,7 @@ return {
 		main = "ibl",
 		opts = {
 			indent = {
-				char = "┃",
+				char = "│",
 			},
 			exclude = {
 				filetypes = {
@@ -128,6 +128,7 @@ return {
 			notification = {
 				window = {
 					winblend = 0,
+                    zindex = 250
 				},
 			},
 		},

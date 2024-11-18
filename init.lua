@@ -22,8 +22,8 @@ require("lazy").setup("plugins", {
 		border = "none",
 	},
 	change_detection = {
-		enabled = false,
-		notify = false,
+		enabled = true,
+		notify = true,
 	},
 	git = {
 		timeout = 500,
