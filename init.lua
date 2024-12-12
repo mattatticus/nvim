@@ -17,17 +17,18 @@ vim.opt.runtimepath:prepend(lazypath)
 
 require("lazy").setup("plugins", {
 	install = { colorscheme = { "catppuccin" } },
+    dashboard = { enabled = true },
 	defaults = { lazy = true },
 	ui = {
 		border = "none",
 	},
 	change_detection = {
-		enabled = true,
-		notify = true,
+		enabled = false,
+		notify = false,
 	},
 	git = {
 		timeout = 500,
 	},
-	checker = { enabled = true },
+	checker = { enabled = false },
 	debug = false,
 })

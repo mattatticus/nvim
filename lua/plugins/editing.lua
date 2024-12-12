@@ -1,170 +1,113 @@
 return {
-    {
-        "windwp/nvim-autopairs",
-        event = { "BufReadPost", "BufNewFile", "BufWritePre" },
-        opts = {
-            check_ts = true,
-            fast_wrap = {
-                map = "<A-t>",
-                chars = { "{", '"', "'", "<" },
-                pattern = [=[[%'%"%)%>%]%)%}%,]]=],
-                end_key = "-",
-                keys = "htnsdaoeuigcrlf',.pybmwvz;",
-                check_comma = true,
-                highlight = "Search",
-                highlight_grey = "Comment",
-            },
-            enable_check_bracket_line = true,
-        },
-    },
+	{
+		"numToStr/Comment.nvim",
+		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+		opts = {
+			-- add any options here
+		},
+	},
 
-    {
-        "hrsh7th/nvim-cmp",
-        version = false,
-        event = { "CmdlineEnter", "InsertEnter" },
-        dependencies = {
-            "hrsh7th/cmp-nvim-lsp",
-            "hrsh7th/cmp-buffer",
-            "hrsh7th/cmp-path",
-            "hrsh7th/cmp-cmdline",
-            "nvim-tree/nvim-web-devicons",
-            "hrsh7th/cmp-nvim-lsp-signature-help",
-        },
-        config = function()
-            local function has_words_before()
-                local line, col = (unpack or table.unpack)(vim.api.nvim_win_get_cursor(0))
-                return col ~= 0
-                    and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match "%s" == nil
-            end
-            local kind_icons = require("config").cmp_icons
-            local cmp = require "cmp"
+	{
+		"windwp/nvim-autopairs",
+		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+		opts = {
+			check_ts = true,
+			fast_wrap = {
+				map = "<A-w>",
+				chars = { "{", "[", "(", '"', "'", "<" },
+				pattern = [=[[%'%"%>%]%)%}%,]]=],
+				end_key = "-",
+				before_key = "z",
+				after_key = "v",
+				avoid_move_to_end = false,
+				cursor_pos_before = true,
+				keys = "aoeuidhtns',.pyfgcrl;qjkxbmwvz",
+				manual_position = false,
+				highlight = "Search",
+				highlight_grey = "Comment",
+				use_virt_lines = false,
+			},
+			enable_check_bracket_line = true,
+		},
+	},
 
-            cmp.setup {
-                window = {
-                    completion = { zindex = 250 },
-                    documentation = { zindex = 250 },
-                },
+	{
+		"stevearc/conform.nvim",
+		keys = {
+			{
+				"<leader>f",
+				function() require("conform").format { async = true, lsp_fallback = true } end,
+				mode = { "n" },
+			},
+		},
+		opts = {
+			formatters_by_ft = {
+				lua = { "stylua" },
+				c = { "clang-format" },
+				cpp = { "clang-format" },
+				javascript = { "js-beautify" },
+				html = { "html-beautify" },
+				haskell = { "fourmolu" },
+				css = { "css-beautify" },
+				rust = { "rustfmt" },
+				go = { "gofmt" },
+			},
+		},
+	},
 
-                snippet = {
-                    expand = function(args) vim.snippet.expand(args.body) end,
-                },
+	{
+		"windwp/nvim-autopairs",
+		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+		opts = {
+			check_ts = true,
+			fast_wrap = {
+				map = "<A-w>",
+				chars = { "{", "[", "(", '"', "'", "<" },
+				pattern = [=[[%'%"%>%]%)%}%,]]=],
+				end_key = "-",
+				before_key = "z",
+				after_key = "v",
+				avoid_move_to_end = false,
+				cursor_pos_before = true,
+				keys = "aoeuidhtns',.pyfgcrl;qjkxbmwvz",
+				manual_position = false,
+				highlight = "Search",
+				highlight_grey = "Comment",
+				use_virt_lines = false,
+			},
+			enable_check_bracket_line = true,
+		},
+	},
 
-                formatting = {
-                    fields = { "kind", "abbr", "menu" },
-                    format = function(entry, vim_item)
-                        vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
-                        vim_item.menu = ({
-                            nvim_lsp = "Lsp",
-                            buffer = "Buffer",
-                            path = "Path",
-                        })[entry.source.name]
-                        return vim_item
-                    end,
-                },
+	{
+		"hrsh7th/nvim-cmp",
+		version = false,
+		event = { "CmdlineEnter", "InsertEnter" },
+		dependencies = {
+			"hrsh7th/cmp-nvim-lsp",
+			"hrsh7th/cmp-buffer",
+			"hrsh7th/cmp-path",
+			"hrsh7th/cmp-cmdline",
+			"nvim-tree/nvim-web-devicons",
+			"hrsh7th/cmp-nvim-lsp-signature-help",
+		},
+		config = require "config.cmp",
+	},
 
-                mapping = cmp.mapping.preset.insert {
-                    ["<C-b>"] = cmp.mapping.scroll_docs(-4),
-                    ["<C-f>"] = cmp.mapping.scroll_docs(4),
+	{
+		"nvim-treesitter/nvim-treesitter",
+		event = { "BufReadPost", "BufNewFile", "BufWritePre" },
 
-                    ["<C-Space>"] = cmp.mapping.complete(),
-                    ["<C-e>"] = cmp.mapping.abort(),
-
-                    ["<CR>"] = cmp.mapping.confirm { select = true },
-
-                    ["<Tab>"] = cmp.mapping(function(fallback)
-                        if cmp.visible() then
-                            _ = #cmp.get_entries() == 1 and cmp.confirm { select = true } or cmp.select_next_item()
-                        elseif vim.snippet.active { direction = 1 } then
-                            vim.snippet.jump(1)
-                        elseif has_words_before() then
-                            cmp.complete()
-                            _ = #cmp.get_entries() == 1 and cmp.confirm { select = true }
-                        else
-                            fallback()
-                        end
-                    end, { "i", "s" }),
-                    ["<S-Tab>"] = cmp.mapping(function(fallback)
-                        if cmp.visible() then
-                            cmp.select_prev_item()
-                        elseif vim.snippet.active { direction = -1 } then
-                            vim.snippet.jump(-1)
-                        else
-                            fallback()
-                        end
-                    end, { "i", "s" }),
-                },
-
-                sources = cmp.config.sources {
-                    { name = "nvim_lsp",               priority = 1000 },
-                    { name = "buffer",                 priority = 500 },
-                    { name = "path",                   priority = 250 },
-                    { name = "nvim_lsp_signature_help" },
-                },
-
-                experimental = {
-                    ghost_text = true,
-                },
-            }
-
-            cmp.setup.cmdline({ "/", "?" }, {
-                mapping = cmp.mapping.preset.cmdline(),
-                sources = {
-                    { name = "buffer" },
-                },
-            })
-
-            cmp.setup.cmdline(":", {
-                mapping = cmp.mapping.preset.cmdline(),
-                sources = cmp.config.sources({
-                    { name = "path" },
-                }, {
-                    { name = "cmdline" },
-                }),
-            })
-        end,
-    },
-
-    {
-        "nvim-treesitter/nvim-treesitter",
-        event = { "BufReadPost", "BufNewFile", "BufWritePre" },
-
-        build = function() vim.cmd "TSUpdate" end,
-        opts = {
-            ensure_installed = require("config").treesitter_parsers,
-            highlight = {
-                enable = true,
-            },
-            indent = {
-                enable = true,
-            },
-            incremental_selection = {
-                enable = true,
-            },
-        },
-        config = function(_, opts) require("nvim-treesitter.configs").setup(opts) end,
-    },
-
-    {
-        "stevearc/conform.nvim",
-        keys = {
-            {
-                "<leader>fo",
-                function() require("conform").format { async = true, lsp_fallback = true } end,
-                mode = { "n" },
-            },
-        },
-        opts = {
-            formatters_by_ft = {
-                lua = { "stylua" },
-                c = { "clang-format" },
-                cpp = { "clang-format" },
-                javascript = { "js-beautify" },
-                html = { "html-beautify" },
-                haskell = { "stylish-haskell" },
-                css = { "css-beautify" },
-                rust = { "rustfmt" },
-                go = { "gofmt" },
-            },
-        },
-    },
+		build = function()
+			require "nvim-treesitter"
+			vim.cmd "TSUpdate"
+		end,
+		opts = {
+			ensure_installed = require("config").parsers,
+			highlight = { enable = true },
+			indent = { enable = true },
+			incremental_selection = { enable = true },
+		},
+		config = function(_, opts) require("nvim-treesitter.configs").setup(opts) end,
+	},
 }
