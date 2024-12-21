@@ -15,9 +15,16 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 
+local Event = require "lazy.core.handler.event"
+Event.mappings.LazyFile = {
+	id = "LazyFile",
+	event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+}
+Event.mappings["User LazyFile"] = Event.mappings.LazyFile
+
 require("lazy").setup("plugins", {
 	install = { colorscheme = { "catppuccin" } },
-    dashboard = { enabled = true },
+	dashboard = { enabled = true },
 	defaults = { lazy = true },
 	ui = {
 		border = "none",
