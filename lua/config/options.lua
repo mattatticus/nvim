@@ -27,7 +27,9 @@ local options = {
 	updatecount = 0,
 	updatetime = 400,
 	wrap = false,
-    fsync = false
+	fsync = false,
+	mouse = "nvi",
+	mousescroll = "ver:0,hor:0",
 }
 
 vim.g.loaded_netrw = 1

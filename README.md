@@ -11,7 +11,7 @@
 
 ## Installation
 > [!NOTE]
-> - ***Make a backup of your old config if you have any.***
+> - ***Make a backup of your old configuration if you have any.***
 > 
 > - ***Requires Neovim 0.10+***
 

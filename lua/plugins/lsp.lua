@@ -1,22 +1,55 @@
 return {
 	{
-		"rachartier/tiny-inline-diagnostic.nvim",
-		event = { "VeryLazy", "LspAttach" },
-		priority = 1000,
-		config = function() require("tiny-inline-diagnostic").setup() end,
-	},
-
-	{
 		"neovim/nvim-lspconfig",
 		event = { "LazyFile" },
-		config = function()
-			local lsp_flags = { debounce_text_changes = 150 }
+		dependencies = {
+			"saghen/blink.cmp",
 
+			{
+				"nvimdev/lspsaga.nvim",
+				dependencies = {
+					"nvim-treesitter/nvim-treesitter",
+					"nvim-tree/nvim-web-devicons",
+				},
+				opts = {
+					symbol_in_winbar = {
+						delay = 200,
+						show_file = false,
+						hide_keyword = true,
+						separator = " -> ",
+					},
+					lightbulb = {
+						enable = false,
+					},
+					ui = {
+						code_action = "",
+					},
+				},
+			},
+
+			{
+				"rachartier/tiny-inline-diagnostic.nvim",
+				event = { "LspAttach", "LazyFile" },
+				opts = {
+					preset = "ghost",
+					options = {
+						throttle = 0,
+						enable_on_insert = true,
+						multiple_diag_under_cursor = true,
+						show_all_diags_on_cursorline = true,
+					},
+				},
+			},
+		},
+		config = function()
 			vim.diagnostic.config {
-				virtual_text = false,
-				update_in_insert = true,
 				underline = true,
 				severity_sort = true,
+				virtual_text = false,
+				update_in_insert = true,
+				signs = {
+					text = require("config").diagnostic_icons,
+				},
 			}
 
 			local lspconfig = require "lspconfig"
@@ -31,7 +64,6 @@ return {
 
 			lspconfig.lua_ls.setup {
 				capabilities = caps,
-				flags = lsp_flags,
 				settings = {
 					Lua = {
 						runtime = {
@@ -74,17 +106,18 @@ return {
 			}
 
 			local servers = {
+				"zls",
 				"cssls",
-				"pyright",
-				"rust_analyzer",
 				"gopls",
 				"ts_ls",
-				"zls",
+				"asm_lsp",
+				"pyright",
+				"glsl_analyzer",
+				"rust_analyzer",
 			}
 
 			for _, lsp in ipairs(servers) do
 				lspconfig[lsp].setup {
-					flags = lsp_flags,
 					capabilities = caps,
 				}
 			end

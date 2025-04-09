@@ -1,5 +1,6 @@
 return {
 	"stevearc/conform.nvim",
+	event = { "BufWritePre" },
 	keys = {
 		{
 			"<leader>f",
@@ -9,14 +10,20 @@ return {
 		},
 	},
 	opts = {
+		format_after_save = {
+			timeout_ms = 200,
+			lsp_format = "fallback",
+		},
 		formatters_by_ft = {
 			lua = { "stylua" },
 			c = { "clang-format" },
 			cpp = { "clang-format" },
-			javascript = { "js-beautify" },
-			html = { "html-beautify" },
+			javascript = { "prettier" },
+			html = { "prettier" },
 			haskell = { "fourmolu" },
-			css = { "css-beautify" },
+			sass = { "prettier" },
+			scss = { "prettier" },
+			css = { "prettier" },
 			rust = { "rustfmt" },
 			go = { "gofmt" },
 		},

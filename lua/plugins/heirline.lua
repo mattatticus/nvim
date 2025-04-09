@@ -1,22 +1,23 @@
+local slice = function(comp, hl)
+	local default = { fg = "crust", bg = "mantle" }
+	return {
+		{
+			provider = "",
+			hl = hl or default,
+		},
+		comp,
+		{
+			provider = "",
+			hl = hl or default,
+		},
+	}
+end
+
 return {
 	"rebelot/heirline.nvim",
 	lazy = false,
+	dependencies = { "nvim-tree/nvim-web-devicons" },
 	opts = function()
-		local slice = function(comp, hl)
-			local default = { fg = "crust", bg = "mantle" }
-			return {
-				{
-					provider = "",
-					hl = hl or default,
-				},
-				comp,
-				{
-					provider = "",
-					hl = hl or default,
-				},
-			}
-		end
-
 		local icon = require("nvim-web-devicons").get_icon_color_by_filetype
 		local conditions = require "heirline.conditions"
 		local utils = require "heirline.utils"
@@ -32,47 +33,7 @@ return {
 		}
 
 		local mode = {
-			static = {
-				mode_map = {
-					["n"] = { "Normal", "blue" },
-					["niI"] = { "Normal", "blue" },
-					["niR"] = { "Normal", "blue" },
-					["niV"] = { "Normal", "blue" },
-					["nt"] = { "Normal", "blue" },
-					["ntT"] = { "Normal", "blue" },
-					["no"] = { "O-Pending", "teal" },
-					["nov"] = { "O-Pending", "teal" },
-					["noV"] = { "O-Pending", "teal" },
-					["no\22"] = { "O-Pending", "teal" },
-					["v"] = { "Visual", "maroon" },
-					["vs"] = { "Visual", "maroon" },
-					["V"] = { "V-Line", "maroon" },
-					["Vs"] = { "V-Line", "maroon" },
-					["\22"] = { "V-Block", "maroon" },
-					["\22s"] = { "V-Block", "maroon" },
-					["s"] = { "Select", "mauve" },
-					["S"] = { "S-Line", "mauve" },
-					["\19"] = { "S-Block", "mauve" },
-					["i"] = { "Insert", "green" },
-					["ic"] = { "Insert", "green" },
-					["ix"] = { "Insert", "green" },
-					["R"] = { "Replace", "lavender" },
-					["Rc"] = { "Replace", "lavender" },
-					["Rx"] = { "Replace", "lavender" },
-					["Rv"] = { "V-Replace", "lavender" },
-					["Rvc"] = { "V-Replace", "lavender" },
-					["Rvx"] = { "V-Replace", "lavender" },
-					["r"] = { "Replace", "lavender" },
-					["rm"] = { "More", "flamingo" },
-					["r?"] = { "Confirm", "red" },
-					["c"] = { "Command", "red" },
-					["cv"] = { "Ex-Mode", "red" },
-					["ce"] = { "Ex-Mode", "red" },
-					["!"] = { "Shell", "peach" },
-					["t"] = { "Terminal", "peach" },
-				},
-			},
-
+			static = { mode_map = require("config").mode_map },
 			init = function(self)
 				local mode = vim.fn.mode()
 				self.mode, self.color = (unpack or table.unpack)(self.mode_map[mode])
@@ -178,8 +139,10 @@ return {
 			return c
 		end
 
+		local diag_icons = require("config").diagnostic_icons
 		local diagnostics = {
 			condition = conditions.has_diagnostics,
+			update = { "DiagnosticChanged", "BufEnter" },
 
 			init = function(self)
 				self.errors = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
@@ -188,12 +151,10 @@ return {
 				self.info = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
 			end,
 
-			update = { "DiagnosticChanged", "BufEnter" },
-
-			chip("hints", "", "teal"),
-			chip("info", "", "mauve"),
-			chip("warnings", "", "yellow"),
-			chip("errors", "", "red"),
+			chip("hints", diag_icons[4], "teal"),
+			chip("info", diag_icons[3], "mauve"),
+			chip("warnings", diag_icons[2], "yellow"),
+			chip("errors", diag_icons[1], "red"),
 		}
 
 		local mainStatusline = {
@@ -214,7 +175,7 @@ return {
 			header,
 			align,
 			{
-				provider = function() return " Toggleterm #" .. (vim.b.toggle_number or 0) .. " " end,
+				provider = function() return " Terminal #" .. (vim.b.toggle_number or 0) .. " " end,
 				hl = {
 					fg = "mantle",
 					bg = "teal",
@@ -282,7 +243,56 @@ return {
 				if self.icon == nil then
 					self.icon, self.color = icon "txt"
 				end
+
+				self.errors = #vim.diagnostic.get(self.bufnr, { severity = vim.diagnostic.severity.ERROR })
+				self.warnings = #vim.diagnostic.get(self.bufnr, { severity = vim.diagnostic.severity.WARN })
+				self.hints = #vim.diagnostic.get(self.bufnr, { severity = vim.diagnostic.severity.HINT })
+				self.info = #vim.diagnostic.get(self.bufnr, { severity = vim.diagnostic.severity.INFO })
 			end,
+			{
+				update = { "DiagnosticChanged", "BufEnter" },
+				condition = function(self) return self.hints > 0 end,
+				provider = function(self) return diag_icons[4] .. " " .. self.hints .. " " end,
+				hl = function(self)
+					return {
+						fg = "teal",
+						bg = self.is_active and "surface0" or "crust",
+					}
+				end,
+			},
+			{
+				update = { "DiagnosticChanged", "BufEnter" },
+				condition = function(self) return self.info > 0 end,
+				provider = function(self) return diag_icons[3] .. " " .. self.info .. " " end,
+				hl = function(self)
+					return {
+						fg = "mauve",
+						bg = self.is_active and "surface0" or "crust",
+					}
+				end,
+			},
+			{
+				update = { "DiagnosticChanged", "BufEnter" },
+				condition = function(self) return self.warnings > 0 end,
+				provider = function(self) return diag_icons[2] .. " " .. self.warnings .. " " end,
+				hl = function(self)
+					return {
+						fg = "yellow",
+						bg = self.is_active and "surface0" or "crust",
+					}
+				end,
+			},
+			{
+				update = { "DiagnosticChanged", "BufEnter" },
+				condition = function(self) return self.errors > 0 end,
+				provider = function(self) return diag_icons[1] .. " " .. self.errors .. " " end,
+				hl = function(self)
+					return {
+						fg = "red",
+						bg = self.is_active and "surface0" or "crust",
+					}
+				end,
+			},
 			{
 				provider = function(self) return " " .. self.icon end,
 				hl = function(self)
@@ -303,23 +313,6 @@ return {
 						bg = self.is_active and "surface0" or "crust",
 					}
 				end,
-			},
-			{
-				provider = "",
-				hl = function(self)
-					return {
-						fg = "text",
-						bg = self.is_active and "surface0" or "crust",
-					}
-				end,
-				on_click = {
-					callback = vim.schedule_wrap(function(_, _)
-						vim.cmd "bd|bp"
-						vim.cmd.redrawtabline()
-					end),
-					minwid = function(self) return self.bufnr end,
-					name = "heirline_tabline_close_buffer_callback",
-				},
 			},
 		}, function(self)
 			return {

@@ -8,10 +8,10 @@ return {
 		require "nvim-treesitter.query_predicates"
 	end,
 	opts = {
-		ensure_installed = require("config").parsers,
-		highlight = { enable = true },
 		indent = { enable = true },
+		highlight = { enable = true },
 		incremental_selection = { enable = true },
+		ensure_installed = require("config").parsers,
 	},
 	config = function(_, opts) require("nvim-treesitter.configs").setup(opts) end,
 }

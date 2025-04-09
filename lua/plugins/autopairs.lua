@@ -1,23 +1,31 @@
 return {
 	"windwp/nvim-autopairs",
 	event = { "LazyFile" },
-	opts = {
-		check_ts = true,
-		fast_wrap = {
-			map = "<A-w>",
-			chars = { "{", "[", "(", '"', "'", "<" },
-			pattern = [=[[%'%"%>%]%)%}%,]]=],
-			end_key = "-",
-			before_key = "z",
-			after_key = "v",
-			avoid_move_to_end = false,
-			cursor_pos_before = true,
-			keys = "aoeuidhtns',.pyfgcrl;qjkxbmwvz",
-			manual_position = false,
-			highlight = "Search",
-			highlight_grey = "Comment",
-			use_virt_lines = false,
-		},
-		enable_check_bracket_line = true,
-	},
+	config = function()
+		local pairs = require "nvim-autopairs"
+		local Rule = require "nvim-autopairs.rule"
+
+		pairs.setup {
+			disable_in_macro = false,
+			check_ts = true,
+			enable_check_bracket_line = false,
+			map_c_w = true,
+			fast_wrap = {
+				map = "<A-w>",
+				chars = { "{", "[", "(", '"', "'", "<" },
+				pattern = [=[[%'%"%>%]%)%}%,]]=],
+				end_key = "-",
+				before_key = "z",
+				after_key = "v",
+				avoid_move_to_end = true,
+				cursor_pos_before = true,
+				keys = "aoeuidhtns',.pyfgcrl;qjkxbmwvz",
+				manual_position = false,
+				highlight = "Search",
+				highlight_grey = "Comment",
+				use_virt_lines = true,
+			},
+		}
+		pairs.add_rule(Rule("*", "*", { "markdown" }))
+	end,
 }

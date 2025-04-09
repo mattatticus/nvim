@@ -1,7 +1,13 @@
 return {
 	"saghen/blink.cmp",
 	event = { "CmdlineEnter", "LazyFile" },
-	build = "cargo build --release",
+	version = "*",
+
+	dependencies = {
+		"L3MON4D3/LuaSnip",
+		"xzbdmw/colorful-menu.nvim",
+		"rafamadriz/friendly-snippets",
+	},
 	opts = function()
 		local function complete_on_last_item(cmp)
 			if not cmp.is_visible() then return false end
@@ -14,12 +20,32 @@ return {
 		end
 
 		return {
+			snippets = { preset = "luasnip" },
+
+			fuzzy = { implementation = "lua" },
+
 			keymap = {
-				preset = "default",
-				["<Tab>"] = { complete_on_last_item, "select_next", "snippet_forward", "fallback" },
-				["<S-Tab>"] = { complete_on_last_item, "select_prev", "snippet_backward", "fallback" },
-				cmdline = {
-					preset = "default",
+				preset = "none",
+				["<Tab>"] = { "snippet_forward", "fallback" },
+				["<S-Tab>"] = { "snippet_backward", "fallback" },
+
+				["<C-n>"] = { "select_next", "fallback" },
+				["<C-p>"] = { "select_prev", "fallback" },
+
+				["<C-u>"] = { "scroll_documentation_up", "fallback" },
+				["<C-d>"] = { "scroll_documentation_down", "fallback" },
+				["<C-c>"] = { "cancel", "fallback" },
+
+				["<CR>"] = { complete_on_last_item, "accept", "fallback" },
+			},
+			cmdline = {
+				completion = {
+					list = { selection = { auto_insert = true, preselect = false } },
+					menu = { auto_show = true },
+				},
+				keymap = {
+					preset = "none",
+					["<C-c>"] = { "cancel", "fallback" },
 					["<Tab>"] = { complete_on_last_item, "select_next", "snippet_forward", "fallback" },
 					["<S-Tab>"] = { complete_on_last_item, "select_prev", "snippet_backward", "fallback" },
 				},
@@ -28,12 +54,21 @@ return {
 
 			completion = {
 				accept = { auto_brackets = { enabled = true } },
-				list = { selection = "auto_insert" },
-				documentation = {
-					auto_show_delay_ms = 0,
-					auto_show = true,
+				list = { selection = { auto_insert = true, preselect = true } },
+				menu = {
+					draw = {
+						padding = 2,
+						columns = { { "kind_icon" }, { "label", gap = 1 } },
+						components = {
+							label = {
+								text = require("colorful-menu").blink_components_text,
+								highlight = require("colorful-menu").blink_components_highlight,
+							},
+						},
+					},
 				},
-				ghost_text = { enabled = true },
+				documentation = { auto_show_delay_ms = 0, auto_show = true },
+				ghost_text = { enabled = true, show_without_selection = true },
 			},
 
 			appearance = {
@@ -43,7 +78,14 @@ return {
 			},
 
 			sources = {
-				default = { "lsp", "path", "snippets", "buffer" },
+				default = { "lsp", "path", "snippets", "buffer", "markdown" },
+				providers = {
+					markdown = {
+						name = "RenderMarkdown",
+						module = "render-markdown.integ.blink",
+						fallbacks = { "lsp" },
+					},
+				},
 			},
 		}
 	end,

@@ -5,9 +5,9 @@ return {
 	lazy = false,
 	init = function() require("catppuccin").load() end,
 	opts = {
-		compile_path = vim.fn.stdpath "cache" .. "/catppuccin",
 		term_colors = true,
 		no_bold = true,
+
 		styles = {
 			comments = { "italic" },
 			conditionals = { "italic" },
@@ -17,15 +17,24 @@ return {
 			booleans = { "italic" },
 			types = { "italic" },
 		},
+
 		integrations = {
 			nvimtree = true,
 			blink_cmp = true,
-			telescope = true,
 			treesitter = true,
-			indent_blankline = {
+			which_key = true,
+			lsp_saga = true,
+
+			telescope = {
 				enabled = true,
-				scope_color = "blue",
+				style = "nvchad",
 			},
+
+			snacks = {
+				enabled = true,
+				indent_scope_color = "mauve",
+			},
+
 			fidget = true,
 			native_lsp = {
 				enabled = true,

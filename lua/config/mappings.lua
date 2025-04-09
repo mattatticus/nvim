@@ -32,3 +32,5 @@ map("n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, "Lsp remove workspac
 map("n", "<leader>rn", vim.lsp.buf.rename, "Lsp rename")
 map("n", "<leader>ca", vim.lsp.buf.code_action, "Lsp code action")
 map("n", "<leader>rf", vim.lsp.buf.references, "Lsp references")
+
+map("n", "<leader>le", function() vim.diagnostic.jump { count = 1 } end, "Goto next error.")

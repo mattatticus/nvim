@@ -26,16 +26,17 @@ require("lazy").setup("plugins", {
 	install = { colorscheme = { "catppuccin" } },
 	dashboard = { enabled = true },
 	defaults = { lazy = true },
+	concurrency = 4,
 	ui = {
 		border = "none",
 	},
 	change_detection = {
-		enabled = false,
-		notify = false,
+		enabled = true,
+		notify = true,
 	},
 	git = {
 		timeout = 500,
 	},
-	checker = { enabled = false },
+	checker = { enabled = true },
 	debug = false,
 })
