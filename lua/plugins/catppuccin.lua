@@ -1,50 +1,53 @@
-return {
-	"catppuccin/nvim",
-	name = "catppuccin",
-	priority = 1000,
-	lazy = false,
-	init = function() require("catppuccin").load() end,
-	opts = {
-		term_colors = true,
-		no_bold = true,
-
-		styles = {
-			comments = { "italic" },
-			conditionals = { "italic" },
-			loops = { "italic" },
-			functions = { "italic" },
-			keywords = { "italic" },
-			booleans = { "italic" },
-			types = { "italic" },
-		},
-
-		integrations = {
-			nvimtree = true,
-			blink_cmp = true,
-			treesitter = true,
-			which_key = true,
-			lsp_saga = true,
-
-			telescope = {
-				enabled = true,
-				style = "nvchad",
-			},
-
-			snacks = {
-				enabled = true,
-				indent_scope_color = "mauve",
-			},
-
-			fidget = true,
-			native_lsp = {
-				enabled = true,
-				underlines = {
-					errors = { "undercurl" },
-					hints = { "undercurl" },
-					warnings = { "undercurl" },
-					information = { "undercurl" },
-				},
-			},
-		},
-	},
+local M = {
+    "catppuccin/nvim",
+    name = "catppuccin",
+    priority = 1000,
+    lazy = false,
+    init = function() require("catppuccin").load() end,
 }
+
+M.opts = {
+    term_colors = true,
+    no_bold = true,
+
+    styles = {
+        comments = { "italic" },
+        conditionals = { "italic" },
+        loops = { "italic" },
+        functions = { "italic" },
+        keywords = { "italic" },
+        booleans = { "italic" },
+        types = { "italic" },
+    },
+
+    integrations = {
+        nvimtree = true,
+        blink_cmp = true,
+        treesitter = true,
+        which_key = true,
+        lsp_saga = true,
+
+        telescope = {
+            enabled = true,
+            style = "nvchad",
+        },
+
+        snacks = {
+            enabled = true,
+            indent_scope_color = "mauve",
+        },
+
+        fidget = true,
+        native_lsp = {
+            enabled = true,
+            underlines = {
+                errors = { "undercurl" },
+                hints = { "undercurl" },
+                warnings = { "undercurl" },
+                information = { "undercurl" },
+            },
+        },
+    },
+}
+
+return M

@@ -3,12 +3,12 @@ vim.g.maplocalleader = " "
 vim.g.command = ""
 
 local function map(mode, key, fn, desc)
-	local opts = { noremap = true, silent = true, desc = desc or "" }
-	vim.keymap.set(mode, key, fn, opts)
+    local opts = { noremap = true, silent = true, desc = desc or "" }
+    vim.keymap.set(mode, key, fn, opts)
 end
 
 local function cmd(s)
-	return function() vim.cmd(s) end
+    return function() vim.cmd(s) end
 end
 
 map("", "<Space>", "<Nop>")
@@ -33,4 +33,4 @@ map("n", "<leader>rn", vim.lsp.buf.rename, "Lsp rename")
 map("n", "<leader>ca", vim.lsp.buf.code_action, "Lsp code action")
 map("n", "<leader>rf", vim.lsp.buf.references, "Lsp references")
 
-map("n", "<leader>le", function() vim.diagnostic.jump { count = 1 } end, "Goto next error.")
+-- map("n", "<leader>le", function() vim.diagnostic.jump { count = 1 } end, "Goto next error.")
