@@ -1,7 +1,7 @@
+local M = {}
+
 require "config.options"
 require "config.mappings"
-
-M = {}
 
 M.parsers = {
     "c",

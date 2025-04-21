@@ -1,9 +1,7 @@
 return {
     "2kabhishek/markit.nvim",
     event = { "LazyFile" },
-    dependencies = {
-        "nvim-lua/plenary.nvim",
-    },
+    dependencies = { "nvim-lua/plenary.nvim" },
     opts = {
         cyclic = true,
         refresh_interval = 50,
