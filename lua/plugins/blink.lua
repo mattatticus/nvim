@@ -10,17 +10,18 @@ local M = {
     },
 }
 
-function M.opts()
-    local function complete_on_last_item(cmp)
-        if not cmp.is_visible() then return false end
+local function complete_on_last_item(cmp)
+    if not cmp.is_visible() then return false end
 
-        local list = require "blink.cmp.completion.list"
-        if #list.items == 1 then
-            cmp.select_and_accept()
-            return true
-        end
+    local list = require "blink.cmp.completion.list"
+    if #list.items == 1 then
+        cmp.select_and_accept()
+        return true
     end
+end
 
+
+function M.opts()
     return {
         snippets = { preset = "luasnip" },
         fuzzy = { implementation = "lua" },
