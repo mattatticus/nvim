@@ -1,17 +1,29 @@
 local options = {
     autoindent = true,
+
     clipboard = "unnamedplus",
+    complete = "",
     conceallevel = 0,
     cursorline = true,
+
     expandtab = true,
+    fsync = false,
+
+    guifont = "Maple Mono NF:h14",
+
     hidden = true,
+
     laststatus = 3,
-    lazyredraw = true,
+
+    mouse = "nv",
+
+    mousescroll = "ver:0,hor:0",
+
     number = true,
     relativenumber = true,
     ruler = true,
+
     scrolloff = 8,
-    shadafile = "NONE",
     shiftwidth = 4,
     showmode = false,
     sidescrolloff = 10,
@@ -21,16 +33,17 @@ local options = {
     splitbelow = true,
     splitright = true,
     swapfile = false,
+
     tabstop = 4,
     termguicolors = true,
-    updatecount = 0,
-    updatetime = 400,
+
+    -- linespace = 8,
+    -- lazyredraw = true,
+    -- shadafile = "NONE",
+    -- updatecount = 0,
+    -- updatetime = 400,
+
     wrap = false,
-    fsync = false,
-    mouse = "nvi",
-    mousescroll = "ver:0,hor:0",
-    guifont = "Maple Mono NF:h14",
-    linespace = 8,
 }
 
 vim.g.loaded_netrw = 1
