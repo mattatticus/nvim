@@ -3,8 +3,11 @@ local M = {
     name = "catppuccin",
     priority = 1000,
     lazy = false,
-    init = function() require("catppuccin").load() end,
 }
+
+function M.init()
+    require("catppuccin").load()
+end
 
 M.opts = {
     term_colors = true,
@@ -27,14 +30,16 @@ M.opts = {
         which_key = true,
         lsp_saga = true,
 
-        telescope = {
-            enabled = true,
-            style = "nvchad",
-        },
+        mini = { enabled = true, },
+
+        -- telescope = {
+        --     enabled = true,
+        --     style = "nvchad",
+        -- },
 
         snacks = {
             enabled = true,
-            indent_scope_color = "mauve",
+            indent_scope_color = "blue",
         },
 
         fidget = true,
