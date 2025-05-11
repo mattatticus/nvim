@@ -24,8 +24,13 @@ end
 function M.opts()
     return {
         snippets = { preset = "luasnip" },
-        fuzzy = { implementation = "lua" },
-        signature = { enabled = true },
+        fuzzy = { implementation = "prefer_rust_with_warning" },
+        signature = {
+            enabled = true,
+            window = {
+                show_documentation = true
+            }
+        },
 
         appearance = {
             use_nvim_cmp_as_default = false,
@@ -65,6 +70,10 @@ function M.opts()
         completion = {
             accept = { auto_brackets = { enabled = true } },
             list = { selection = { auto_insert = true, preselect = true } },
+
+            documentation = { auto_show_delay_ms = 0, auto_show = true },
+            ghost_text = { enabled = true, show_without_selection = true },
+
             menu = {
                 draw = {
                     padding = 2,
@@ -77,8 +86,6 @@ function M.opts()
                     },
                 },
             },
-            documentation = { auto_show_delay_ms = 0, auto_show = true },
-            ghost_text = { enabled = true, show_without_selection = true },
         },
 
         sources = {
