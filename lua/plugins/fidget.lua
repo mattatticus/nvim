@@ -1,6 +1,7 @@
 local M = {
-    "j-hui/fidget.nvim",
     lazy = false,
+    "j-hui/fidget.nvim",
+    -- dependencies = { "nvim-tree/nvim-tree.lua" },
 }
 
 M.opts = {
@@ -14,7 +15,6 @@ M.opts = {
         override_vim_notify = true,
         window = {
             winblend = 0,
-            max_width = 60,
         },
     },
 }
