@@ -1,7 +1,6 @@
 local M = {
     lazy = false,
     "j-hui/fidget.nvim",
-    -- dependencies = { "nvim-tree/nvim-tree.lua" },
 }
 
 M.opts = {

@@ -91,7 +91,7 @@ M.mode_map = {
 M.diagnostic_icons = {
     [vim.diagnostic.severity.ERROR] = "󰈸",
     [vim.diagnostic.severity.WARN] = "",
-    [vim.diagnostic.severity.HINT] = "",
+    [vim.diagnostic.severity.HINT] = "",
     [vim.diagnostic.severity.INFO] = "",
 }
 

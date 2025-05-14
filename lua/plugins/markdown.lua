@@ -1,6 +1,10 @@
-return {
+local M = {
     "MeanderingProgrammer/render-markdown.nvim",
-    dependencies = { "nvim-treesitter/nvim-treesitter" },
     ft = { "markdown" },
-    opts = {},
 }
+
+M.dependencies = { "nvim-treesitter/nvim-treesitter" }
+
+M.opts = {}
+
+return M

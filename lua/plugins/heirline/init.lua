@@ -1,6 +1,6 @@
 local M = {
     "rebelot/heirline.nvim",
-    -- dependencies = { "echasnovski/mini.nvim" },
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     lazy = false,
 }
 

@@ -1,8 +1,9 @@
 local M = {
     "folke/flash.nvim",
     event = "VeryLazy",
-    opts = {},
 }
+
+M.opts = {}
 
 M.keys = {
     { "s",     mode = { "n", "x", "o" }, function() require("flash").jump() end,              desc = "Flash" },

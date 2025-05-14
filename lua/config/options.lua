@@ -39,7 +39,7 @@ local options = {
 
     -- linespace = 8,
     -- lazyredraw = true,
-    -- shadafile = "NONE",
+    shadafile = "NONE",
     -- updatecount = 0,
     -- updatetime = 400,
 

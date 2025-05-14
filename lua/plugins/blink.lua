@@ -2,12 +2,12 @@ local M = {
     "saghen/blink.cmp",
     event = { "CmdlineEnter", "LazyFile" },
     version = "*",
+}
 
-    dependencies = {
-        "L3MON4D3/LuaSnip",
-        "xzbdmw/colorful-menu.nvim",
-        "rafamadriz/friendly-snippets",
-    },
+M.dependencies = {
+    "L3MON4D3/LuaSnip",
+    "xzbdmw/colorful-menu.nvim",
+    "rafamadriz/friendly-snippets",
 }
 
 local function complete_on_last_item(cmp)

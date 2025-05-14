@@ -4,59 +4,63 @@ local M = {
     lazy = false,
 }
 
+M.dependencies = { "nvim-tree/nvim-web-devicons" }
+
 M.opts = {}
 
--- M.opts.scope = {
---     enabled = true,
---     cursor = false,
---
---     treesitter = {
---         blocks = {
---             enabled = true,
---         },
---     },
---
---     keys = {
---         textobject = {
---             is = {
---                 min_size = 2, -- minimum size of the scope
---                 edge = false, -- inner scope
---                 cursor = false,
---                 treesitter = { blocks = { enabled = false } },
---                 desc = "inner scope",
---             },
---
---             as = {
---                 cursor = false,
---                 min_size = 2, -- minimum size of the scope
---                 treesitter = { blocks = { enabled = false } },
---                 desc = "full scope",
---             },
---         },
---
---         jump = {
---             ["<C-t>"] = {
---                 min_size = 1,
---                 bottom = false,
---                 cursor = false,
---                 edge = true,
---                 desc = "jump to top edge of scope",
---             },
---
---             ["<C-b>"] = {
---                 min_size = 1,
---                 bottom = true,
---                 cursor = false,
---                 edge = true,
---                 desc = "jump to bottom edge of scope",
---             },
---         },
---     },
--- }
+M.opts.lazygit = {
+    enabled = true,
+}
+
+M.opts.scope = {
+    enabled = true,
+    cursor = false,
+
+    treesitter = {
+        blocks = {
+            enabled = true,
+        },
+    },
+
+    keys = {
+        textobject = {
+            is = {
+                min_size = 2, -- minimum size of the scope
+                edge = false, -- inner scope
+                cursor = false,
+                treesitter = { blocks = { enabled = true } },
+                desc = "inner scope",
+            },
+
+            as = {
+                cursor = false,
+                min_size = 2, -- minimum size of the scope
+                treesitter = { blocks = { enabled = true } },
+                desc = "full scope",
+            },
+        },
+
+        jump = {
+            ["<C-t>"] = {
+                min_size = 1,
+                bottom = false,
+                cursor = false,
+                edge = true,
+                desc = "jump to top edge of scope",
+            },
+
+            ["<C-b>"] = {
+                min_size = 1,
+                bottom = true,
+                cursor = false,
+                edge = true,
+                desc = "jump to bottom edge of scope",
+            },
+        },
+    },
+}
 
 M.opts.indent = {
-    enabled = true,
-
     chunk = {
         enabled = true,
         char = {
@@ -85,10 +89,54 @@ M.opts.image = {
 M.opts.picker = {
     prompt = "  ",
     layout = { preset = "telescope" },
+    icons = {
+        tree = {
+            middle = "│ ",
+        },
+        diagnostics = {
+            Error = "󰈸 ",
+            Warn  = " ",
+            Hint  = " ",
+            Info  = " ",
+        },
+    },
+
+    sources = {
+        explorer = {
+            diagnostics_open = true,
+            win = {
+                list = {
+                    -- Xplr like key bindings
+                    keys = {
+                        ["h"] = "explorer_up",
+                        ["l"] = "explorer_focus",
+                    },
+
+                    on_buf = function()
+                        require "fidget.notification.window".set_x_offset(41)
+                    end,
+                    on_close = function()
+                        require "fidget.notification.window".set_x_offset(0)
+                    end
+                }
+            },
+            layout = {
+                layout = {
+                    backdrop = true,
+                    width = 40,
+                    min_width = 40,
+                    height = 0,
+                    position = "right",
+                    border = "none",
+                    box = "vertical",
+                    { win = "list", border = "none" },
+                },
+            },
+        }
+    }
 }
 
 M.opts.scroll = {
-    -- enabled = false,
     enabled = true,
     animate = {
         easing = "inOutQuad",
@@ -96,29 +144,6 @@ M.opts.scroll = {
     },
 }
 
-local function explorer()
-    require "snacks".picker.explorer {
-        diagnostics_open = true,
-        layout = {
-            layout = {
-                backdrop = true,
-                width = 40,
-                min_width = 40,
-                height = 0,
-                position = "right",
-                border = "none",
-                box = "vertical",
-                { win = "list", border = "none" },
-            },
-        },
-    }
-end
-
-function M.init()
-    if vim.fn.argc(-1) == 0 then
-        explorer()
-    end
-end
 
 M.keys = {
     {
@@ -159,8 +184,40 @@ M.keys = {
         desc = "Open Snacks Explorer",
 
         "<C-e>",
-        explorer,
+        function()
+            require "snacks".explorer.open()
+        end,
     },
+
+    {
+        mode = { "n" },
+        desc = "Pick help pages",
+
+        "<leader>help",
+        function()
+            require "snacks".picker.help()
+        end
+    },
+
+    {
+        mode = { "n" },
+        desc = "Pick man pages",
+
+        "<leader>man",
+        function()
+            require "snacks".picker.man()
+        end
+    },
+
+    {
+        mode = { "n" },
+        desc = "Open LazyGit",
+
+        "<leader>g",
+        function()
+            require "snacks".lazygit()
+        end
+    }
 }
 
 return M

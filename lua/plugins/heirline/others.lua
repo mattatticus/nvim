@@ -37,7 +37,7 @@ M.special = {
     condition = function()
         return conditions.buffer_matches {
             buftype = { "help", "quickfix" },
-            filetype = { "alpha", "lazy", "NvimTree", "snacks_*" },
+            filetype = { "alpha", "lazy", "snacks_*" },
         }
     end,
 

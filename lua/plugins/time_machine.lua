@@ -1,6 +1,6 @@
 local M = {
     "y3owk1n/time-machine.nvim",
-    event = { "LazyFile" },
+    event = { "VeryLazy" },
 }
 
 M.opts = {

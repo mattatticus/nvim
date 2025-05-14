@@ -34,5 +34,3 @@ map("n", "<leader>ca", vim.lsp.buf.code_action, "Lsp code action")
 map("n", "<leader>rf", vim.lsp.buf.references, "Lsp references")
 
 map("n", "<leader>L", function() vim.cmd "Lazy" end, "Open lazy")
-
--- map("n", "<leader>le", function() vim.diagnostic.jump { count = 1 } end, "Goto next error.")

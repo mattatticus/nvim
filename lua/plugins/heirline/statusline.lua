@@ -68,7 +68,9 @@ local filetype = slice {
         end
     end,
 
-    provider = function(self) return " " .. self.icon end,
+    provider = function(self)
+        return " " .. (self.icon or "")
+    end,
 
     hl = function(self)
         return {
