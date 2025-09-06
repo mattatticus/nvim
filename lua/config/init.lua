@@ -3,23 +3,6 @@ local M = {}
 require "config.options"
 require "config.mappings"
 
-M.parsers = {
-    "c",
-    "go",
-    "cpp",
-    "css",
-    "lua",
-    "zig",
-    "bash",
-    "glsl",
-    "fish",
-    "html",
-    "rust",
-    "scss",
-    "python",
-    "javascript",
-}
-
 M.kind_icons = {
     Enum = "",
     File = "",
@@ -93,6 +76,16 @@ M.diagnostic_icons = {
     [vim.diagnostic.severity.WARN] = "",
     [vim.diagnostic.severity.HINT] = "",
     [vim.diagnostic.severity.INFO] = "",
+}
+
+vim.diagnostic.config {
+    underline = true,
+    severity_sort = true,
+    virtual_text = false,
+    update_in_insert = true,
+    signs = {
+        text = M.diagnostic_icons,
+    },
 }
 
 return M

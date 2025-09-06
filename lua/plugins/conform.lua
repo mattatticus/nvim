@@ -33,6 +33,7 @@ M.opts = {
         scss = { "prettier" },
         css = { "prettier" },
         rust = { "rustfmt" },
+        python = { "black" },
         go = { "gofmt" },
     },
 }

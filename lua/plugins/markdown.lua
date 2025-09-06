@@ -1,10 +1,12 @@
 local M = {
-    "MeanderingProgrammer/render-markdown.nvim",
-    ft = { "markdown" },
+    "OXY2DEV/markview.nvim",
 }
 
-M.dependencies = { "nvim-treesitter/nvim-treesitter" }
-
-M.opts = {}
+M.opts = {
+    preview = {
+        enable_hybrid_mode = true,
+        hybrid_modes = { "n" },
+    }
+}
 
 return M

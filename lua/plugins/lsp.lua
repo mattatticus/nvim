@@ -3,7 +3,7 @@ local M = {
     event = { "LazyFile" },
 }
 
-local lazydev = {
+local L = {
     "folke/lazydev.nvim",
     ft = "lua",
     opts = {
@@ -13,7 +13,7 @@ local lazydev = {
     },
 }
 
-lazydev.dependencies = {
+L.dependencies = {
     "saghen/blink.cmp",
     opts = {
         sources = {
@@ -29,53 +29,24 @@ lazydev.dependencies = {
     },
 }
 
+
+local D = {
+    "rachartier/tiny-inline-diagnostic.nvim",
+}
+
+D.opts = {
+    preset = "ghost",
+    options = {
+        throttle = 0,
+        enable_on_insert = true,
+        multiple_diag_under_cursor = true,
+        show_all_diags_on_cursorline = true,
+    },
+}
+
 M.dependencies = {
-    lazydev,
-
-    {
-        "nvimdev/lspsaga.nvim",
-        dependencies = {
-            "nvim-treesitter/nvim-treesitter",
-        },
-        keys = {
-            {
-                "<leader>[",
-                ":Lspsaga diagnostic_jump_prev<CR>",
-                mode = { "n" },
-                desc = "Jump to previous diagnostic",
-            },
-            {
-                "<leader>]",
-                ":Lspsaga diagnostic_jump_next<CR>",
-                mode = { "n" },
-                desc = "Jump to next diagnostic",
-            },
-        },
-        opts = {
-            symbol_in_winbar = {
-                delay = 100,
-                show_file = false,
-                hide_keyword = true,
-                separator = " -> ",
-            },
-            lightbulb = {
-                enable = false,
-            },
-        },
-    },
-
-    {
-        "rachartier/tiny-inline-diagnostic.nvim",
-        opts = {
-            preset = "ghost",
-            options = {
-                throttle = 0,
-                enable_on_insert = true,
-                multiple_diag_under_cursor = true,
-                show_all_diags_on_cursorline = true,
-            },
-        },
-    },
+    L,
+    D,
 }
 
 function M.config()

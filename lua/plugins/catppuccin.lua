@@ -24,11 +24,11 @@ M.opts = {
     },
 
     integrations = {
-        nvimtree = true,
-        blink_cmp = true,
+        blink_cmp = { enabled = true, },
         treesitter = true,
+
         which_key = true,
-        lsp_saga = true,
+        markview = true,
 
         snacks = {
             enabled = true,

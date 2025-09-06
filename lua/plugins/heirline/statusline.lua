@@ -20,7 +20,7 @@ end
 local align = { provider = "%=" }
 
 local header = {
-    provider = " 󰄛 ",
+    provider = " 󰄛  ",
     hl = {
         fg = "mantle",
         bg = "blue",
@@ -91,7 +91,7 @@ filetype.condition = function() return vim.bo.filetype ~= "" end
 
 local lsp = {
     init = function(self) self.attached = conditions.lsp_attached() end,
-    provider = " 󰒋 ",
+    provider = " 󰒋  ",
     hl = function(self)
         return {
             fg = "mantle",

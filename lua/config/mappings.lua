@@ -1,6 +1,6 @@
+vim.g.command = ""
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
-vim.g.command = ""
 
 local function map(mode, key, fn, desc)
     local opts = { noremap = true, silent = true, desc = desc or "" }
@@ -12,14 +12,17 @@ local function cmd(s)
 end
 
 map("", "<Space>", "<Nop>")
-map("n", "<leader>n", "<C-w>w")
-map("n", "<leader>a", cmd "bd|bp")
+map("n", "<leader>q", cmd "bd|bp")
+
 map("n", "<C-.>", cmd "bnext")
 map("n", "<C-,>", cmd "bprev")
 map("n", "<C-<>", cmd "tabprevious")
 map("n", "<C->>", cmd "tabnext")
 map("t", "<esc>", "<C-\\><C-n>")
 map("t", "<C-[>", "<C-\\><C-n>")
+
+map("n", "<leader>p", function() vim.diagnostic.jump { count = -1 } end, "Jump to previous diagnostic")
+map("n", "<leader>n", function() vim.diagnostic.jump { count = 1 } end, "Jump to next diagnostic")
 
 map("n", "<leader>lD", vim.lsp.buf.declaration, "Lsp declaration")
 map("n", "<leader>ld", vim.lsp.buf.definition, "Lsp definition")

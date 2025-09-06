@@ -28,7 +28,7 @@ require("lazy").setup(
         install = { colorscheme = { "catppuccin" } },
         dashboard = { enabled = true },
         defaults = { lazy = true },
-        concurrency = 4,
+        concurrency = nil,
         ui = {
             border = "none",
         },
@@ -44,14 +44,10 @@ require("lazy").setup(
     }
 )
 
-vim.api.nvim_create_autocmd(
-    "User",
-    {
-        pattern = { "VeryLazy" },
-        callback = function()
-            if vim.fn.argc(-1) == 0 then
-                require "snacks".explorer()
-            end
-        end
-    }
-)
+require('vim._extui').enable({
+    enable = true,
+    msg = {
+        target = 'cmd',
+        timeout = 4000,
+    },
+})

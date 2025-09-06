@@ -10,6 +10,7 @@ local options = {
     fsync = false,
 
     guifont = "Maple Mono NF:h14",
+    linespace = 10,
 
     hidden = true,
 
@@ -27,7 +28,7 @@ local options = {
     shiftwidth = 4,
     showmode = false,
     sidescrolloff = 10,
-    signcolumn = "yes",
+    signcolumn = "yes:2",
     smartindent = true,
     smarttab = true,
     splitbelow = true,

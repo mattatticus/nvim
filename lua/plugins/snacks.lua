@@ -4,22 +4,73 @@ local M = {
     lazy = false,
 }
 
-M.dependencies = { "nvim-tree/nvim-web-devicons" }
+local T = {
+    "folke/todo-comments.nvim",
+    event = { "LazyFile" },
+}
+
+T.opts = {}
+
+T.keys = {
+    {
+        mode = { 'n' },
+        desc = "Jump to prev diagnostic or todo comment",
+        "<leader>[",
+        function()
+            if #vim.diagnostic.get(0) == 0 then
+                require "todo-comments".jump_prev()
+                return
+            end
+
+            vim.diagnostic.jump { count = -1 }
+        end
+    },
+
+    {
+        mode = { 'n' },
+        desc = "Jump to next diagnostic or todo comment",
+        "<leader>[",
+        function()
+            if #vim.diagnostic.get(0) == 0 then
+                require "todo-comments".jump_prev()
+                return
+            end
+
+            vim.diagnostic.jump { count = -1 }
+        end
+    },
+
+    {
+        mode = { 'n' },
+        desc = "Jump to next diagnostic or todo comment",
+        "<leader>]",
+        function()
+            if #vim.diagnostic.get(0) == 0 then
+                require "todo-comments".jump_next()
+                return
+            end
+
+            vim.diagnostic.jump { count = 1 }
+        end
+    },
+}
+
+M.dependencies = {
+    "nvim-tree/nvim-web-devicons",
+    T,
+}
 
 M.opts = {}
-
-M.opts.lazygit = {
-    enabled = true,
-}
 
 M.opts.scope = {
     enabled = true,
     cursor = false,
 
     treesitter = {
-        blocks = {
-            enabled = true,
-        },
+        enabled = false,
+        -- blocks = {
+        --     enabled = true,
+        -- },
     },
 
     keys = {
@@ -61,14 +112,17 @@ M.opts.scope = {
 }
 
 M.opts.indent = {
-    chunk = {
-        enabled = true,
-        char = {
-            corner_top = "╭",
-            corner_bottom = "╰",
-            arrow = ">",
-        },
-    },
+    animate = {
+        easing = "outSine"
+    }
+    -- chunk = {
+    --     enabled = false,
+    --     char = {
+    --         corner_top = "╭",
+    --         corner_bottom = "╰",
+    --         arrow = "->",
+    --     },
+    -- },
 }
 
 M.opts.terminal = {
@@ -83,7 +137,10 @@ M.opts.terminal = {
 }
 
 M.opts.image = {
-    enabled = true
+    enabled = true,
+    math = {
+        enabled = false,
+    },
 }
 
 M.opts.picker = {
@@ -136,31 +193,38 @@ M.opts.picker = {
     }
 }
 
-M.opts.scroll = {
-    enabled = true,
-    animate = {
-        easing = "inOutQuad",
-        duration = { step = 20, total = 500 },
-    },
-}
+-- M.opts.scroll = {
+--     enabled = true,
+--     animate = {
+--         easing = "inOutQuad",
+--         duration = { step = 20, total = 500 },
+--     },
+-- }
 
 
 M.keys = {
     {
-        mode = { "n" },
+        mode = { "n", "t" },
         desc = "Toggle Terminal",
 
-        "<leader>t",
+        "<c-/>",
         function() require("snacks").terminal.toggle() end,
     },
 
+    -- {
+    --     mode = { "n" },
+    --     desc = "Toggle Scratch Buffer",
+    --
+    --     "<leader>.",
+    --     function() require("snacks").scratch() end,
+    -- },
 
     {
         mode = { "n" },
-        desc = "Toggle Scratch Buffer",
+        desc = "Pick todo comments",
 
-        "<leader>.",
-        function() require("snacks").scratch() end,
+        "<leader>gt",
+        function() require("snacks").picker.todo_comments() end,
     },
 
 
@@ -208,16 +272,13 @@ M.keys = {
             require "snacks".picker.man()
         end
     },
-
-    {
-        mode = { "n" },
-        desc = "Open LazyGit",
-
-        "<leader>g",
-        function()
-            require "snacks".lazygit()
-        end
-    }
 }
+
+M.init = function()
+    if vim.fn.argc(-1) == 0 then
+        require "snacks".explorer()
+    end
+end
+
 
 return M

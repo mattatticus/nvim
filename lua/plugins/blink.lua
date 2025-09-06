@@ -48,7 +48,7 @@ function M.opts()
 
             ["<C-u>"] = { "scroll_documentation_up", "fallback" },
             ["<C-d>"] = { "scroll_documentation_down", "fallback" },
-            ["<C-c>"] = { "cancel", "fallback" },
+            -- ["<C-c>"] = { "cancel", "fallback" },
 
             ["<C-e>"] = { "show" },
             ["<CR>"] = { complete_on_last_item, "accept", "fallback" },
@@ -89,14 +89,7 @@ function M.opts()
         },
 
         sources = {
-            default = { "lsp", "path", "snippets", "buffer", "markdown" },
-            providers = {
-                markdown = {
-                    name = "RenderMarkdown",
-                    module = "render-markdown.integ.blink",
-                    fallbacks = { "lsp" },
-                },
-            },
+            default = { "lsp", "path", "snippets", "buffer" },
         },
     }
 end

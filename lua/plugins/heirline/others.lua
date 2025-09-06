@@ -5,7 +5,7 @@ local conditions = require "heirline.conditions"
 local align = { provider = "%=" }
 
 local header = {
-    provider = " 󰄛 ",
+    provider = " 󰄛  ",
     hl = {
         fg = "mantle",
         bg = "blue",
@@ -37,7 +37,7 @@ M.special = {
     condition = function()
         return conditions.buffer_matches {
             buftype = { "help", "quickfix" },
-            filetype = { "alpha", "lazy", "snacks_*" },
+            filetype = { "alpha", "lazy", "snacks_*", "fyler" },
         }
     end,
 

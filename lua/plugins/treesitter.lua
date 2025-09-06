@@ -1,18 +1,48 @@
 local M = {
-    "nvim-treesitter/nvim-treesitter",
-    event = { "LazyFile" },
+    lazy = false,
+    branch = "main",
     build = ":TSUpdate",
+    "nvim-treesitter/nvim-treesitter",
 }
 
-M.opts = {
-    indent = { enable = true },
-    highlight = { enable = true },
-    incremental_selection = { enable = true },
-    ensure_installed = require("config").parsers,
+M.parsers = {
+    "c",
+    "go",
+    "cpp",
+    "css",
+    "lua",
+    "zig",
+    "bash",
+    "glsl",
+    "fish",
+    "html",
+    "rust",
+    "scss",
+    "query",
+    "python",
+    "javascript",
 }
 
-function M.config(_, opts)
-    require("nvim-treesitter.configs").setup(opts)
+M.dependencies = {
+    "catppuccin/nvim",
+    "OXY2DEV/markview.nvim",
+}
+
+function M.config()
+    local ts = require "nvim-treesitter"
+    ts.install(M.parsers)
+
+    vim.api.nvim_create_autocmd(
+        'FileType',
+        {
+            pattern = M.parsers,
+            callback = function()
+                vim.treesitter.start()
+                vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+                vim.bo.indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+            end
+        }
+    )
 end
 
 return M
