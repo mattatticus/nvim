@@ -1,53 +1,91 @@
-vim.loader.enable()
+local options = {
+    autoindent = true,
 
-require "config"
+    clipboard = "unnamedplus",
+    complete = "",
+    conceallevel = 0,
+    cursorline = true,
 
-local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
-if not vim.uv.fs_stat(lazypath) then
-    vim.fn.system {
-        "git",
-        "clone",
-        "--filter=blob:none",
-        "--single-branch",
-        "https://github.com/folke/lazy.nvim.git",
-        lazypath,
-    }
-end
-vim.opt.runtimepath:prepend(lazypath)
+    expandtab = true,
+    fsync = false,
 
-local Event = require "lazy.core.handler.event"
-Event.mappings.LazyFile = {
-    id = "LazyFile",
-    event = { "BufReadPost", "BufNewFile", "BufWritePre" },
+    guifont = "Maple Mono NF:h14",
+    linespace = 10,
+
+    hidden = true,
+
+    laststatus = 3,
+
+    mouse = "nv",
+
+    mousescroll = "ver:0,hor:0",
+
+    number = true,
+    relativenumber = true,
+    ruler = true,
+
+    scrolloff = 8,
+    shiftwidth = 4,
+    showmode = false,
+    sidescrolloff = 10,
+    signcolumn = "yes:2",
+    smartindent = true,
+    smarttab = true,
+    splitbelow = true,
+    splitright = true,
+    swapfile = false,
+
+    tabstop = 4,
+    termguicolors = true,
+
+    -- linespace = 8,
+    -- lazyredraw = true,
+    shadafile = "NONE",
+    -- updatecount = 0,
+    -- updatetime = 400,
+
+    wrap = false,
 }
-Event.mappings["User LazyFile"] = Event.mappings.LazyFile
 
-require("lazy").setup(
-    "plugins",
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.o.timeout = true
+vim.o.timeoutlen = 500
+
+for k, v in pairs(options) do
+    vim.opt[k] = v
+end
+
+vim.g.command = ""
+vim.g.mapleader = " "
+vim.g.maplocalleader = " "
+
+vim.keymap.set(
+    { "" },
+    "<Space>",
+    "<Nop>",
     {
-        install = { colorscheme = { "catppuccin" } },
-        dashboard = { enabled = true },
-        defaults = { lazy = true },
-        concurrency = nil,
-        ui = {
-            border = "none",
-        },
-        change_detection = {
-            enabled = true,
-            notify = true,
-        },
-        git = {
-            timeout = 500,
-        },
-        checker = { enabled = true },
-        debug = false,
+        silent = true,
+        noremap = true,
+        desc = "",
     }
 )
 
-require('vim._extui').enable({
-    enable = true,
-    msg = {
-        target = 'cmd',
-        timeout = 4000,
-    },
-})
+vim.keymap.set(
+    { "n" },
+    "<leader>q",
+    function()
+        vim.cmd("bd|bp")
+    end,
+    {
+        silent = true,
+        noremap = true,
+        desc = "Delete and switch buffer",
+    }
+)
+
+require "ui"
+require "statusline"
+
+require "lsp"
+require "qol"
